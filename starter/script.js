@@ -1,14 +1,24 @@
-// Type Coercion
-// - happens when the operatore is dealing with two values with two different types
-// - behind the scene convert one of the values to match the other value.
+// Truthy and Falsy Values (Boolean)
+// - Falsy: is not false and will become false when converted to a boolean (1. 0 2. '' 3. underfined 4. null 5. NaN)
+// - Truthy: will become true when converted to boolean (1. number > 0 , )
 
-console.log(`I am ` + 23 + ` yers old`);  //converts int 23 to str behind the screen
-console.log(`23` - `10` - 3);   // OUTPUT: 10
-console.log(`23` + `10` - 3);   //OUTPUT: 2307
 
-//guess
-let n = `1` + 1;
-n = n - 1;
-console.log(n)  
+console.log(Boolean(0));  //Falsy Value
+console.log(Boolean('Jason')); //Truthy Value
+console.log(Boolean(``));     //Falsy Value
+console.log(Boolean(undefined));  //Falsy Value
+console.log(Boolean({})); //Truthy Value
 
-//my guess: 10   (OUTPUT: 10 ) -- correct
+const money = 0;    
+if (money) {    //Boolean 0 = Falsy -> goes to else condition
+    console.log(`Don't spend it all`);
+} else {
+    console.log(`You should get a job`);
+}
+
+let height;   //height is undefined here as it is not assigned with any value. 
+if (height) {   //Boolean: undefine = Falsy -> goes to the else condition.
+    console.log(`Height is defined`);
+} else {
+    console.log(`Height is not defined`);
+}
