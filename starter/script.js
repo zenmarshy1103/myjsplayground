@@ -1,21 +1,18 @@
-// The Conditionals (Ternary Operator)
-// - Another way of if-else statement when the code being executed of the conditional is simple and not complicated
-// - Can be confusing but once understood it is very useful is come cases.
-// - SYNTAX: variable = if statement ? if true execute this : else execute this
+//Activate strict mode 
+//- ENSURE - TO HAVE THIS MODE TURNED ON ALL THE TIME!!!
+//- To have more secure code to avoid accidental bugs, it forbids the developer to do certain things
+//- Create visible errors in certain situation where as without it JS will fail silently without letting the developer know the mistake made
 
-var age = prompt('What is your age? ')
+'use strict';  //Helps us to debug 
 
-const drink = age >= 18 ? "wine": 'water';
-console.log(drink);
+let hasDriversLicense = false; 
+const passTest = true;
 
-//The above is similar to the following If-ELSE Statement
+if (passTest) hasDriversLicense = true;
+if (hasDriversLicense) console.log('I can drive'); 
 
-let drink2;
-if (age >= 18) {
-    drink2 = 'wine';
-} else {
-    drink2 = 'water';
-}
-console.log(drink2);
 
-console.log(`I like to drink ${age >= 18 ? "wine": 'water'}`)
+// The following variable names are reserved in JS, using strict mode, JS console will let the develop know that these are reserved words.
+// const interface = 'Audio';
+// const private = 999;
+
