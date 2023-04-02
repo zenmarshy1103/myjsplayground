@@ -1,36 +1,22 @@
-// Arrow Functions 
-// - Shorter and fast to write 
-// - Is a special type of function expression 
- 
+// Function calling other functions
+// - Using function calling in a function is a way to not repeat you code.
+// - Cleaner way of coding, and easier to change parameter or executing code for each function
+// -
+
 'strict mode'
 
-//Arrow Function initialisation
-const calcAge = birthYear => 2023 - birthYear; //This way the return data is outputed implicately 
-const fayeAge = calcAge(1993);  
-console.log(fayeAge);    
-
-
-//Arrow Function with one parameter and return data
-const yearsUntilRetirement = birthYear => {  //The bracket is needed with there are more than 1 line of code to be run for the function
-    const age = 2023 - birthYear;
-    const retirement = 65 - age;
-    return retirement;                      //In this case the return is needed to return the return data
+function cutFruitPieces(fruit) { //A function to cut the fruit into 4 small pieces of the input fruit
+    return fruit * 4;  
 }
 
-//Arrow Function with more than one parameter and return data
-const yearsToRetirement = (birthYear, firstName) => {  
-    const age = 2023 - birthYear;
-    const retirement = 65 - age;
-    return `${firstName} retires in ${retirement} years.` ;                     
+function fruitProcessor(apples, oranges) {
+    applesPieces = cutFruitPieces(apples);  //calling the cutFruitPieces function
+    orangePieces = cutFruitPieces(oranges);
+
+
+    const juice = `juices with ${applesPieces} small pieces of apples and ${orangePieces} small pieces of oranges`;
+    return juice;
 }
 
-const randomAge = yearsUntilRetirement(1989);
-console.log(randomAge);
-
-const personOne = yearsToRetirement(1989, 'Jason');
-console.log(personOne);
-
-
-
-
-
+const juiceProduct = fruitProcessor(2, 3);
+console.log(juiceProduct);
