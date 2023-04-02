@@ -1,38 +1,25 @@
-// Functions
-// - A chunk of code that we can reuse in our program
-// - Can have or not have parameter (input data)
-// - Can output data to be used later in the code (return data) and be used to assign to a variable
-'strict mode'
+// Function Declaration and Expressions 
+// - Calling of a function declaration function can be run before or after the function declaration initialisation
+// - Calling of a function expression function has to be after function expression declaration intialisation
+// - These are used on personal preference, they are literally the same.
 
-//Function Declaration
-function logger() {
-    console.log("My name is Jason");
+//Function Declaration initialisation
+function calcAge1(birthYear) {   //Parameter is birthYear here
+    const age = 2023 - birthYear;
+    return age;
 }
 
-//Calling function, running function  or invoking function
-logger();
+//Parameter is the input data
+//Arguments are the actual input data
 
-//reusing 
-logger();
-logger();
-logger();
+const jasonAge = calcAge1(1989); //Argument is 1989 here
+console.log(jasonAge);
 
-//Function with parameters(input data), the parameter will get defined when function is called.
-// Returning a output that can be used when the function is called.
-function fruitProcessor(apples, oranges) {
-    // console.log(apples, oranges);
-    const juice = `juice with ${apples} apples and ${oranges} oranges.`;
-    return juice;   //return data
+
+//Function Expression initialisation, assigning an anonymous function (a function without a function name) to a varaible
+const calcAge2 = function (birthYear){
+    return 2023 - birthYear;
 }
 
-//Calling the function with input data and Capturing the value into a variable)
-const fruitJuice = fruitProcessor(5, 0);  //storing the function to a variable which will output the return data.
-console.log(fruitJuice);
-
-
-const appleOrangeJuice = fruitProcessor(2, 4);
-console.log(appleOrangeJuice);
-
-
-
-
+const cyrusAge = calcAge2(2022); //Function expression calling is the same but the parameter is added with varaiable that is assigned with the anonymous function during the function expression delaration
+console.log(cyrusAge);
