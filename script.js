@@ -1,25 +1,36 @@
-// Function Declaration and Expressions 
-// - Calling of a function declaration function can be run before or after the function declaration initialisation
-// - Calling of a function expression function has to be after function expression declaration intialisation
-// - These are used on personal preference, they are literally the same.
+// Arrow Functions 
+// - Shorter and fast to write 
+// - Is a special type of function expression 
+ 
+'strict mode'
 
-//Function Declaration initialisation
-function calcAge1(birthYear) {   //Parameter is birthYear here
+//Arrow Function initialisation
+const calcAge = birthYear => 2023 - birthYear; //This way the return data is outputed implicately 
+const fayeAge = calcAge(1993);  
+console.log(fayeAge);    
+
+
+//Arrow Function with one parameter and return data
+const yearsUntilRetirement = birthYear => {  //The bracket is needed with there are more than 1 line of code to be run for the function
     const age = 2023 - birthYear;
-    return age;
+    const retirement = 65 - age;
+    return retirement;                      //In this case the return is needed to return the return data
 }
 
-//Parameter is the input data
-//Arguments are the actual input data
-
-const jasonAge = calcAge1(1989); //Argument is 1989 here
-console.log(jasonAge);
-
-
-//Function Expression initialisation, assigning an anonymous function (a function without a function name) to a varaible
-const calcAge2 = function (birthYear){
-    return 2023 - birthYear;
+//Arrow Function with more than one parameter and return data
+const yearsToRetirement = (birthYear, firstName) => {  
+    const age = 2023 - birthYear;
+    const retirement = 65 - age;
+    return `${firstName} retires in ${retirement} years.` ;                     
 }
 
-const cyrusAge = calcAge2(2022); //Function expression calling is the same but the parameter is added with varaiable that is assigned with the anonymous function during the function expression delaration
-console.log(cyrusAge);
+const randomAge = yearsUntilRetirement(1989);
+console.log(randomAge);
+
+const personOne = yearsToRetirement(1989, 'Jason');
+console.log(personOne);
+
+
+
+
+
