@@ -46,9 +46,10 @@ if (jason[interestIn]) {
     console.log(`Wrong Request, Choose between firstName, lastName, age, job, and friends `);
 }
 
-
-//Adding property to object
+//Adding property to object using DOT NOTATION
 jason.location = 'New Zealand';
+
+//Adding property to object using DOT NOTATION
 jason['email'] = 'jasonliu628@gmail.com';
 console.log(jason);
 
