@@ -1,57 +1,60 @@
-// Objects - Dot vs Bracket Notation
-//- Used to retrieve and adding data from and to object data structures.
-//- 
+// Object - Methods
+//- Key: Value pair can be object and function(method) too
+//- Create your own method for object where was an Array has their own methods hence an array can be thought as an object as well
 //-
 'strict mode'
 
-//Constructing Object Data Sturcture with key-Value pairs
-const jason = {   //Object Literal Syntax - Literally constructing the object with the properties
-    // Assigning key: value pairs
-    firstName: 'Jason',  // property firstName , there are 5 properties for jason object
-    lastName: 'Liu',
-    age: 2023 - 1989,
-    job: 'web developer',
-    friends: ['Allen', 'Jim', 'Han'],
-};
+const jason = {
+    firstName: `Jason`,
+    lastName: `Liu`,
+    birthYear: 1989,
+    job: `web developer`,
+    friends: ['Allen', 'Han', 'Jim'],
+    hasDriverLicese: true,
 
-console.log(jason);
+    //Add function (Method) to the object as a property - Name of function is the Key, value is the function expression
+     //key: value (calcAge: function(birthYear))
+    // calcAge: function(birthYear) {     
+    //     return 2023 - birthYear;
+    // }
 
-//Getting a property of an obect - Using Dot Notation 
-console.log(jason.lastName); //Retrieving the lastName property of the jason Object, it has to be a real, existing properly key name
+    //Add Function (Method) using 'this' keyword 
+    //- this keyword is equal to the object on which the method is called (equal to the object calling the method)
+    //- ie: jason object is calling calcAge method, hence the 'this' keyword will point to the jason object
+    //calcAge: function (){
+        //console.log(this);   //this points to jason object
+       // return 2023 - this.birthYear; //this.birthYear is getting the birthYear from he object that this function is in ie jason object
+    //}
 
-//Getting a property of an obect - Using Bracket Notation
-//can be used to have cancaternated string as input - more useful than dot notation when needed
-console.log(jason['lastName']); //Retrieving the lastName property of the jason Object using the key of property inside the object
+    //Add function (method) using 'this' keyword and store it as a property in the object
+    calcAge: function (){
+        this.age = 2023 - this.birthYear;  //adding age property to this object (refering to jason object) and assign it with 2023 - this.birthYear
+        return this.age;
+    },
 
-const nameKey = `Name`;
-console.log(jason['first' + nameKey]);
-console.log(jason['last' + nameKey]);
+    //Challenge Section - adding a checker to output 'has a driver's license' and 'has no driver's license'
 
-//This will output an error - Dot Notation using cancaternated input 
-//console.log(jason.'last' + nameKey)  
-
-const interestIn = prompt(`What do you want to know about Jason? Choose between firstName, lastName, age, job, and friends`);
-console.log(interestIn);
-//Using DOT NOTATION 
-console.log(jason.interestIn); //OUTPUTS: undefined because there is no property key called interestIn, the dot notation does not get the assigned value but the name of the variable
-// but if the property is not in the object will output undefined.
-
-//Using BRACKET NOTATION
-console.log(jason[interestIn]); //OUTPUTS: the value of the key name of the property, the bracket notation evaluate the value stored in the variable which is then used for the input expression of the bracket notation.
-
-//Accounts for property not in the object, outputs an string in the console.
-if (jason[interestIn]) {
-    console.log(jason[interestIn]);
-} else {
-    console.log(`Wrong Request, Choose between firstName, lastName, age, job, and friends `);
+    getSummary: function (){        
+        //Remember tenary conditional expression can be added into a string!!! and make it neater!!!
+        // Tenary Condintional:   <SYNTAX> conditional? trueExecute: falseExecute
+        return `${this.firstName} is a ${this.calcAge()} years old ${this.job}, and he has${this.hasDriverLicese? 'a' : 'no'} driver's license.`
+    }
 }
 
-//Adding property to object using DOT NOTATION
-jason.location = 'New Zealand';
+//Executing the method from the object
+//console.log(jason.calcAge(1989));   // Dot Notation
+//console.log(jason['calcAge'](1989)); // Bracket Notation
 
-//Adding property to object using DOT NOTATION
-jason['email'] = 'jasonliu628@gmail.com';
-console.log(jason);
+//Executing the method from the object using the existing properties
+//console.log(jason.calcAge(jason.birthYear));  //Violate - Dont Repeat Yourself, jason object is repeated twice in this code,
 
-//Challenge - Output "Jason has 3 friends, and his best friend is called Allen"
-console.log(`${jason.firstName} has ${jason.friends.length} friends, and his best friend is called ${jason.friends[0]}`);
+
+//Executing the method again after the this keyword has been implemented in the method
+console.log(jason.calcAge());
+console.log(jason.age)
+
+//Challenge - output "Jason is a 34 years old web devloper, and he has a driver's license"
+console.log(jason.getSummary());
+
+
+
