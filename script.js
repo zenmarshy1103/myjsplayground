@@ -1,59 +1,30 @@
-// For Loop - Looping through Arrays, Breaking and Continuing
-//- More features for For Loop
-//- Continue Statement: Exit the current iteration of the loop and continue to the next iteration
-//- Break Statement: Completely terminate the whole loop
+// For Loop - Looping Backwards and Looping in Loops
+//- Loop over array backwards
+//- Loop inside a Loop (Nested Loops)
+//- 
 'strict mode'
 
-//Looping through Array (output every element inside the array)
-const jasonArray = [
-    'Jason',
+const jason= [
+    'jason',
     'Liu',
     2023 - 1989,
     'web developer',
-    ['Allen', 'Jim', 'Han'],
+    ['Allen', 'Han', 'Jim']
 ];
-const types = [];  //creating an empty array to be used later
 
-console.log(jasonArray.length) //finding the length of the array
-
-for(let i = 0;  i < jasonArray.length; i++) {   //Counter starts at 0 and if condition ( counter is less than the length of the array) then runs the for loop
-    console.log(jasonArray[i]);
-
-    // types[i] = typeof jasonArray[i];  //Adding the type of data to the  empty types  array (method 1)
-    types.push(typeof jasonArray[i]);    //Adding the type of data to the  empty types  array (method 2) - Using Push Method 
+// Loop over array backwards
+// index: 4, 3, 2, 1, 0
+for (let i = jason.length-1; i >= 0; i--) {
+    console.log(i, jason[i]);
 }
 
-console.log(types);
+// Create a loop inside a loop
+for (let exercise = 1; exercise < 4; exercise++) {
+    console.log(`------- Starting exercise ${exercise}`);
 
-//Another example of pushing data and doing calculation then add it to a new empty array
-const years = [1989, 2021, 2022, 1978, 1981];
-const ages = []
-
-for (let i = 0; i < years.length; i++) {
-    ages.push(2023 - years[i]);
-}
-console.log(ages );
-
-// Continue and break statement
-
-//Continue Statement - Exit the current iteration of the loop and continue to the next iteration
-console.log('-- ONLY STRINGS --')
-for(let i = 0;  i < jasonArray.length; i++) {   //Counter starts at 0 and if condition ( counter is less than the length of the array) then runs the for loop
-    if (typeof jasonArray[i] !== 'string') {
-        continue; //exits the current iteration and go to the next iteration if the element is not a string type
-    } else {
-        console.log(jasonArray[i]);
-    }     
-}
-
-//Break Statement - Completely terminate the whole loop
-console.log('-- BREAK WITH NUMBER --')
-for(let i = 0;  i < jasonArray.length; i++) {   //Counter starts at 0 and if condition ( counter is less than the length of the array) then runs the for loop
-    if (typeof jasonArray[i] === 'number') {
-        break; //breaks out of the for loop when the current iteration is pointing to the number type of the element
-    } else {
-        console.log(jasonArray[i]);
-    }     
+    for (let rep = 1; rep < 6; rep++){
+        console.log(` > Exercise ${exercise} - Lifting weight repetition ${rep}`);
+    }
 }
 
 
