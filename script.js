@@ -1,31 +1,38 @@
-// For Loop - Looping Backwards and Looping in Loops
-//- Loop over array backwards
-//- Loop inside a Loop (Nested Loops)
-//- 
+// While Loop
+//- The block will only execute when (while) the condition is true
+//- Counter need to be declared outside the while loop block (when Needed)
+//- Increment/decrement need to be put inside the while loop block (when Needed)
+//- Use when looping without the need of counter and incremented when trying to solve or execute anything without a counter or increment / decrement
 'strict mode'
 
-const jason= [
-    'jason',
-    'Liu',
-    2023 - 1989,
-    'web developer',
-    ['Allen', 'Han', 'Jim']
-];
+//For Loop
+for (let rep = 1; rep <= 10; rep++) {
+    console.log(`Lifting weight repetition ${rep}`);    
+}
+console.log(`------- End of For Loop -------`)
 
-// Loop over array backwards
-// index: 4, 3, 2, 1, 0
-for (let i = jason.length-1; i >= 0; i--) {
-    console.log(i, jason[i]);
+//Implementing the above for loop using while loop
+// While Loop - only specify the condition
+let rep = 1;
+while (rep <= 10) {
+    console.log(`Lifting weight repetition ${rep}`);
+    rep++
+}
+console.log(`------- End of While Loop -------`)
+
+// Example that does not depent on counter and counter increment or decrement
+let dice = Math.random() * 6; //calling Build-In Math function Outputs a decimal dumeber between 0 to 1 (multiplying 6 meaning will get from 0 - 6)
+dice = Math.trunc(dice) + 1;  //Truncating the decimal places (outputs 0 - 6),
+// console.log(dice)
+
+if (dice === 6){  //Added to check if 6 is rolled at the first time
+    console.log(`6 Is rolled, Loop eneded`);
 }
 
-// Create a loop inside a loop
-for (let exercise = 1; exercise < 4; exercise++) {
-    console.log(`------- Starting exercise ${exercise}`);
-
-    for (let rep = 1; rep < 6; rep++){
-        console.log(` > Exercise ${exercise} - Lifting weight repetition ${rep}`);
+while (dice !== 6) {
+    console.log(`Rolled a ${dice}`);
+    dice = Math.trunc(Math.random() * 6) + 1;
+    if (dice === 6){
+        console.log(`6 Is rolled, Loop eneded`);
     }
 }
-
-
-
