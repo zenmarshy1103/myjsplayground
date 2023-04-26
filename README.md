@@ -124,6 +124,30 @@ Executione Context (EC) contains:
        - When a function is nested with function 1 and function 2 and there an a global variable. the inner function 2 (Child of function 1) can access its own variable and the variable set in function 1 and the variable in the gloval scope.
        - NOTE: Var varaibles are function scoped  
 
+Hoisting and the Teporary Dead Zone(TDZ) - - - (Variable Environment)
+
+    >>Executione Context:
+        - 1. Variable Environment
+        - 2. Scope Chain
+        - 3. this Keyword
+
+    Hoisting : Make some types of variable usable in the code before they are actually declared. 
+    <Behind the Scene>
+        - Before execution, code is scanned for variable declaratoin and for each variable, a new property is created in the variable environment object.
+
+
+    >> TDZ 
+        - 1. Makes it easier to avoid and catch errors: accessing variables before declaration is bad practice and should be avoided.
+        - 2. Make const variables actually work.
+
+    >> Why Hoistering
+        - 1. Using functions before actual declaration
+        - 2. var hoisting is just a byproduct
+
+    
+
+
+
 
         
         
