@@ -144,6 +144,29 @@ Hoisting and the Teporary Dead Zone(TDZ) - - - (Variable Environment)
         - 1. Using functions before actual declaration
         - 2. var hoisting is just a byproduct
 
+The this Keyword
+
+   >> this Keyword / Variable: 
+        - 1. special variable that is created for every execution context (every function). Takes the value of (points to) the "owner" of the function in which the this Keyword is used.
+
+        - 2. this Keyword is not static. It depends on how the function is called and its value is only assigned when the function is actually called. 
+
+    >> Ways to call function
+        - 1. Method: this = object tha is calling the method
+
+        - 2. Simple function call: this = undefined (ONLY in Strict Mode)
+
+        - 3. Arrow Function: this = this of surrounding function ie parent function, outer function (lexical this) . NOTE: Arrow Function do not get its own this keyword.
+
+        - 4. Event Listener: this = <DOM element that the handler is attached to>
+
+        - 5. new, call apply, bind
+
+        NOTE: this does not point to the function itself, and also not to its variable environment.
+
+
+
+
     
 
 

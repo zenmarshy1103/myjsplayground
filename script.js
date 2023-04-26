@@ -1,58 +1,51 @@
-// Hoisting
-// - Variables and functions have initial values before they are initialised and declared
-// -  var = undefined, let and const = Teperal Dead Zone
-// -  var will be created in the window object
+// this Keyword
+// - Dynamic not static
+// - this will always points to the object calling the method
+// - ARROW FUNCTION: does not have thie keyword, this will get the window object.
 // -
 
 'use strict';
+// >> Global Variable
+console.log(this); // this gets the global object (window)
 
-//Hoisting with Varaibles
-// Using variables before initialiation
-// console.log(me); //Initial value = undefined
-// console.log(job); //Initial value = in the Teperal Dead Zone
-// console.log(year); //Initial value = in the Teperal Dead Zone
+//Function
+const calcAge = function (birthYear) {
+  console.log(2023 - birthYear);
+  console.log(this); // this gets the function this keyword which points to undefined
+  // as this referes to the function and it is not an object
+};
+calcAge(1989);
 
-// var me = 'Jason';
-// let job = 'tester';
-// const year = 1989;
+// >> ARROW FUNCTION
+const calcAgeArrow = birthYear => {
+  console.log(2023 - birthYear);
+  console.log(this); // NOTE: ARROW FUNCTION behaves differently to normal function
+  // ARROW FUNCTION: this gets the parent scope of the arrow function which is the window object
+  // Not the this keyword of its own arrow function.
+};
+calcAgeArrow(1989);
 
-//Hoisting with Function
+// >> Object - Method
+// NOTE: this keyword always points to the the object that is calling the method
+const jason = {
+  year: 1989,
+  calcAge: function () {
+    console.log(this); // this points to the whole object with all its attributes
+    console.log(2023 - this.year); // this.attribute_of_class will let this points to the designated object attributes
+  },
+};
+jason.calcAge();
 
-//console.log(addDecl(2, 3));
-//console.log(addExpl(2, 3)); // In the terperal Dead Zone - cannot access before initialization
-//console.log(addArrow);
-//console.log(addArrow(2, 3)); // Var is undefine when called before it is inialised so calling undefined is saying it is not a function
+// >> this keyword always points to the the object that is calling the method
+const faye = {
+  year: 1993,
+};
+//adding object attribute (adding function)
+// Method borrowing
+faye.calcAge = jason.calcAge; // Assigning the calcAge function from jason object to faye object
+faye.calcAge(); // Now the this keyword gets faye object, NOTE: this keyword always points to the the object that is calling the method
 
-
-
-// function addDecl(a, b) {
-//   return a + b;
-// }
-
-// const addExpr = function (a, b) {
-//     return a + b;
-// };
-
-// var addArrow = (a, b) => {
-//     return a + b;
-// }
-
-//Example -- 1
-console.log(numProducts);
-if (!numProducts) deleteShoppingCart();
-
-var numProducts = 10; // Hoisting with Var variable initial value is undefined
-
-function deleteShoppingCart() {
-    console.log(`All products deleted`);
-}
-
-//Example -- 2 (Variable declared with var will create it on the window object)
-
-var x = 1;
-let y = 2;
-const z = 3;
-
-console.log(x === window.x);
-console.log(y === window.y);
-console.log(z === window.z);
+// >> A function getting the function called from the method of an object
+// this keyword will only point to the object calling the method
+const f = jason.calcAge; //Copied the method to a variable (copying a funcion and assign to another function)
+f(); // this keyword points to undefined as there is no owning object just a regular function.
