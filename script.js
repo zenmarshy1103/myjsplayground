@@ -1,4 +1,5 @@
-// Primitives vs Objects (Primitive vs Reference Types)
+// Primitives vs Objects (More Examples)
+// - Object.assign(destination, from) - Merges two arrays together but shallow copy will not copy and assign new memory in the heap for objects (arrays) inside objects
 // - Primitive Values - Stored in the CALL STACK with identifier, memory address and value
 // -                  - Only primitive value set as constant is immutable
 // - Reference Values - Stored in the HEAP with memory address and value.
@@ -38,3 +39,45 @@ console.log(`friend:`, me)       //     - <CALL STACK> Identifier: me, ADDRESS: 
                                  //     -       <HEAP> ADDRESS: D30F, VALUE: {name: 'jason', age: 27}
                                  //     - <CALL STACK> Identifier: friend, ADDRESS: 0003(Example), Value: D30F
                                  //     -       <HEAP> ADDRESS: D30F, VALUE: {name: 'jason', age: 27}
+                                 
+// >> MORE EXAMPLES
+// Primitive Types
+let lastName = 'Jia';
+let oldLastname = lastName;
+lastName = 'Liu';
+console.log(lastName, oldLastname);
+
+// Reference Type
+const faye = {
+    firstName: 'Faye',
+    lastName: 'Jia',
+    age: 2023 - 1993,
+};
+
+const marriedFaye = faye; // creating a new variable name that points to the same CALL STACK address of faye object.
+marriedFaye.lastName = 'Liu'   // Changes the properties stored in the HEAP which is being pointed to by the object variable name of both faye and marriedFaye
+console.log('Before Marriage:', faye);
+console.log('After Marriage:', marriedFaye);
+
+// Reference Type - Coping Objects (Object.assign())
+// - Merging two objects together
+
+const faye2 = {
+    firstName: 'Faye',
+    lastName: 'Jia',
+    age: 2023 - 1993,
+    family: ['Cyrus', 'Claire', 'Clara']      
+};
+
+const faye2Copy = Object.assign({}, faye2); // Merging an object to an empty object (Shallow copy not a deep clone meaning it will not copy an object stored in an object )
+faye2Copy.lastName = "Liu";
+// console.log('Before Marriage:', faye2);
+// console.log('After Marriage:', faye2Copy);
+
+//The family array (object) is stored in the HEAP which is not copied using the Object.assign() - It is still being pointed to by the Heap Memory
+faye2Copy.family.push('Jason')   //Is pushing on an element onto the array which is being referenced by both faye2 and faye2Copy so both has the same array (Due to the fact that both are referencing to the array object which was not copied in the first place)
+console.log('Before Marriage:', faye2);     
+console.log('After Marriage:', faye2Copy);
+
+
+
