@@ -165,6 +165,30 @@ The this Keyword
         NOTE: this does not point to the function itself, and also not to its variable environment.
 
 
+Primitive vs Objects
+
+    >> Primitives (Primitive Types) 
+        1. Number
+        2. String
+        3. Boolean
+        4. Undefined
+        5. Null
+        6. Symbol
+        7. Biglnt
+
+    >> Objects (Referemce Types)
+        1. Object literal
+        2. Arrays
+        3. Functions
+        4. Many more...
+
+    >> JS engine
+        1. CALL STACK - where function are executed (Primitive Types are stroed in the EXECUTION CONTEXT in the CALL STACK)
+        2. HEAP - where objects are stored in memory (Reference Types are stored in the MEMORY HEAP)
+
+
+
+
 
 
     

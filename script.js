@@ -1,72 +1,40 @@
-// Regular Function vs Arrow Function (this Keyword and arguments Keyword)
-// - NOTE: NEVER EVER use ARROW FUNCTION as a method of an object!!! this Keyword will always points to the window global object (Parent Scope) (widow)
-// - BUT: ARROW FUNCTION inside a method , this Keyword will get the parent scope object (window > object > object.method(with Arrow Function))
-// - NOTE: Function inside an object method, this Keyword will get undefined - 2 ways to fix: 1) Assign a varaible to preserve this Keyword of the object. 2) Use arrow function inside the object method.
-// - Argument keyword (Regular Functions: argument keyword gets the numbe of arguments entered, Arrow Function: does not have argument keyword)
+// Primitives vs Objects (Primitive vs Reference Types)
+// - Primitive Values - Stored in the CALL STACK with identifier, memory address and value
+// -                  - Only primitive value set as constant is immutable
+// - Reference Values - Stored in the HEAP with memory address and value.
+//                    - referencing values are stored in the HEAP even when set as constant you still can change it ( >> NOTE: we are not changing the value at the address in the CALL STACK but in the ADDRESS of the HEAP)
+// - IMPORTANT: Objects - The varaiable of the object is stored in the CALL STACK With an idenfier of the object variable name , memory address and the value which points to the address of the HEAP (REFERENCING to the HEAP ADDRESS) 
+// -                    - Object attributes are values stored in the HEAP with an address then the object variable in the CALL STACK with an address points to the value which references the HEAP address that have he value of the object attributes
 
 'use strict';
 
-var firstName = 'Jason' // NOTE: var creates an property on the window global object
+// >> Primitive Value (Numbers, Strings, Boolean etc)
+//      - Stored in the CALL STACK with identifier, memory address and value
+//      - The identifier points to the address not the value 
+//      - The value at / set at a certain memory in the CALL STACK is immutable (CANNOT BE CHANGED)
+let age = 30;  // Identifier: age,  address: 0001(example), value: 30. ( >> NOTE: Age points to the memory address which hold the value of 30)
+let oldAge = age; //Assign age = 31 to old age, ( >> NOTE: old age identifer is pointing to the same address as age hence the value at the address is 30)
+age = 31;         // change age in let age = 30 to 31 ( >> NOTE: NEW piece of memory is created with a new address and stores the value 31)
+console.log(age);
+console.log(oldAge);
 
-// >> Arrow Function as method of an object
-// this keyword used by the arrow function will always get the global window object 
-const jason = {
-    firstName: 'Jason',
-    year: 1989,
-    calcAge: function () {
-    //console.log(this); // this points to the whole object with all its attributes
-    console.log(2023 - this.year); // this.attribute_of_class will let this points to the designated object attributes
-   
-    // // >> SOLUTION 1 - PRE ES6 (FOLLOW FIX 1, FIX 2 and FIX 3)
-    // // >> Making a self variable to use this Keyword to point to the object (preserving the this keyword)
-    // const self = this;  //FIX STEP 1 ( can also be const that = this) 
-
-    // // >> Adding a function in a method:
-    // const isMillenial = function() {
-    //     console.log(this)  // this Keyword gets undefined
-    //     console.log(self); //FIX STEP 2
-    //     console.log(self.year >= 1981 && self.year <= 1996); //FIX STEP 3
-    //     console.log(this.year >= 1981 && this.year <= 1996); //PIT FALL: this in a function will ALWAYS get undefined as it is just a regular function call
-    // }   
-    
-    
-    // >> SOLUTION 2 - ES6 Arrow function inside a object method - 
-    // >> Using an arrow function will get the parent scope object which is the jason object
-    const isMillenial = () => {       // FIX A  
-        console.log(this); 
-        console.log(this.year >= 1981 && this.year <= 1996); 
-    }    
-    isMillenial();
-    },
-
-  greet: () => console.log(`hey ${this.firstName}`),  // this is called by the greet function hence the arrow function will get the window function and window.firstName is undefined.
-  //But if a Var variable is created. this will get the var object when using the same var variable name.
-  greet1: () => console.log(`hey ${this}`),  // ARROW FUNCTION will get the window global object
+// >> Reference Value (Objects, Arrays etc)
+//      - Stored in the HEAP with memory arress and value.
+//      - The varaiable of the object is stored in the CALL STACK With an idenfier of the object variable name , memory address and the value which points to the address of the HEAP (REFERENCING to the HEAP ADDRESS)
+//      -
+const me = {                   // CALL STACK - Identifier: me, Address: 0003(Example), Value: D30F(example)  <-- HEAP memory address       
+    name: 'Jason',             // HEAP - Address: D30F(example), value: { name: 'jason', age: 30;}
+    age: 30,
 };
-jason.greet1();
-jason.greet();
 
-
-// > Function inside a method
-// this will ALWAYS get undefined even if a function is in the object (object > object.method > function)
-jason.calcAge();
-
-// To fix this, getting rid of undefined we need to set a self variable (PRE ES6 solution) (REFER SOLUTION 1: FIX 1, FIX 2 and FIX 3)
-
-// New way to fix ES6 solution (Refer to SOLUTION 2: FIX A - Using Arrow Function)
-
-
-// arguments keyword - Allow user to enter more argument into a function
-// arguments gets the number of argument inputs from the user specify and store them in an array
-const addExpr = function(a, b) {
-    console.log(arguments);
-    return a + b;
-}
-addExpr(2, 5);
-addExpr(2, 5 , 6, 7);
-
-var addArrow = (a, b) => {   // Arrow function does not have the argument keyword
-    console.log(arguments);
-    return a + b
-}
-addArrow(1, 3, 4, 5);
+// Source of confusion - friend and me are still referencing the me object
+//      - Only primitive value set as constant is immutable
+//      - Referecing value values are stored in the HEAP even when set as constant you still can change it ( >> NOTE: we are not changing the value at the address in the CALL STACK but in the ADDRESS of the HEAP)
+//      - Copying a object to a variable is the same as assigning a new idenfier / varaible that points to the same addrss of the copied object.
+const friend = me;               // CALL STACK - Identifier: friend ADDRESS: 0003(Example), Value: D30F
+friend.age = 27;                 // HEAP - Address: D30F(example), value: { name: 'jason', age: 27;} <-- We just change the value of the age to 27 in the HEAP which is still being referenced by the me and friend identifier in the CALL HEAP
+console.log(`friend:`, friend);  // RESULT: 
+console.log(`friend:`, me)       //     - <CALL STACK> Identifier: me, ADDRESS: 0003(Example), Value: D30F
+                                 //     -       <HEAP> ADDRESS: D30F, VALUE: {name: 'jason', age: 27}
+                                 //     - <CALL STACK> Identifier: friend, ADDRESS: 0003(Example), Value: D30F
+                                 //     -       <HEAP> ADDRESS: D30F, VALUE: {name: 'jason', age: 27}
