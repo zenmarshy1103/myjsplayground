@@ -1,17 +1,16 @@
-// Arrays - Destructing  
-// - Unpacking values from an array into separate variables
-// - Retrieve elements from the array and store it into variables
-// - Destructing 1D Array
-// - Destructing array and retrieve the wanted element from the array
-// - Changing order of the variables from destructed array
-// - Destructing Nested Array
-// - Assigning default variables for destructing array - used when we are unsure of the size of the array.
-
+// Object - Destructing
+// - Unpacking properties from an object into separate variables
+// - Retrieve property from the object and store it into variables
+// - Object Destructing: Order Does not matter, the destructing values must be exactly the same as the property of the object
+// - Assigning default values for destructing property values
+// - Mutating variables of destructing Object
+// - Destructing Nested Object
+// - Using functions with destructing arguments of a input object
 'use strict';
 
 // Data needed for a later exercise
 // const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+'_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
 const restaurant = {
@@ -21,76 +20,94 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  //Function to return more than 1 variable using return array type
-
-  order: function(starterIndex, mainIndex) {
+  //Function / Method to return more than 1 variable using return array type
+  order: function (starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  }
+  },
 
-  // openingHours: {
-  //   thu: {
-  //     open: 12,
-  //     close: 22,
-  //   },
-  //   fri: {
-  //     open: 11,
-  //     close: 23,
-  //   },
-  //   sat: {
-  //     open: 0, // Open 24 hours
-  //     close: 24,
-  //   },
-  // },
+  // >> Function / Method to destruct an object of a input argument
+  // - Argument name must be the same as the property names of the input object
+  // - Arguments now can be used to set default as they are the destructing of the input argument
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = `20:00`,
+    address,
+  }) {
+    console.log(
+      `ORDER RECEIVED: ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]}, will be delivered to ${address} at ${time}`
+    );
+  },
+
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0, // Open 24 hours
+      close: 24,
+    },
+  },
 };
 
-const array1 = [2, 3, 4];
-const a = array1[0]
-const b = array1[1]
-const c = array1[2]
+// >> 1. Object Destructing
+//  - <USED TO> API retrivals - API are normally in JSON formate or object format
+//  - The Order does not matter for object
+//  - variable name must have be the exact same name as the object attribute that you are wanting to retrieve
+const { name, openingHours, categories } = restaurant;
+console.log(name, openingHours, categories);
 
-// >> 1. Destructing elements into new varables
-//  - Orginal array is uneffected only using its elements and store it to variables.
-const [x, y ,z] = array1;   // << SYNTAX; Array Destructin Assignment
-console.log(x, y ,z);
+// >> 2. Renaming property name
+//  - <USED TO> Changing property name of third party object data
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+console.log(restaurantName, hours, tags);
 
-// >> Working with the data from the restaurante category array
+// >> 3. Assigning Default Values for Properties
+//  Return value of an property that does not exist in an object will get undefined
+//  Assigning defalue value to object destructing, will return the default value if the property does not exist in the object and return the propertry value wif the property exists in the object
+const { menu = [], starterMenu: starters = [] } = restaurant; //Menu property will get the default of empty array and starters will get the values of the starter property in the restaurant object
+console.log(menu, starters);
 
-// >> 2.  Destructing Array - Skipping element and retrieve the element you need to use
-const [first, , second] = restaurant.categories; // Skipping element in the array; skipping the 2nd element by leaving a hole ie [x, ,y] = array;
-console.log(first, second) //Note; 2nd element in the restaurant category array was skipped
+// >> 4. Mutating variables of destructing Object
+let a = 111;
+let b = 999;
+const obj = { a: 23, b: 7, c: 14 };
+({ a, b } = obj); //If the variables that we are destructing into is already assigned, wrap the destructing code in ( ), or JS will come up with the error and tells you that it is expecting a function or statement
+console.log(a, b);
 
-let [main, ,secondary] = restaurant.categories;
+// >> 5. Destructing Nested Object
+// Go to the wanted object and then destruct the properties
+const {
+  fri: { open: o, close: c }, //renaming the destructing varaibles and return of the nexted object properties
+} = openingHours; // Returns the properties of the nexted openingHours object {open: x, close: y}
 
-// Switching Order - Normal Way
-// const temp = main;
-// main = secondary;
-// secondary = temp;
-// console.log(main, secondary)
+const { fri } = openingHours;
+console.log(fri);
 
-// >> 3. Switch Order - Destruct way
-[main, secondary] = [secondary, main];
-console.log(main, secondary);
+console.log(open, close); // this two varables will now not output any values as they have been renamed
+console.log(o, c);
 
-// >> 4. Destructing return values (Array type) from a function
-console.log(restaurant.order(2,0));
-const [starter, mainCourse] = restaurant.order(2,0);
-console.log(starter, mainCourse);
+// >> 6. Using functions with destructing arguments of a input object
+//  - Input of the function need to be the exact same name as the property of the input object. (See above in the Restaruant Object -> orderDelivery method)
+restaurant.orderDelivery({
+  time: `22:30`,
+  address: `Via Del SOle, 21`,
+  mainIndex: 2,
+  starterIndex: 2,
+});
 
-// >> 5. Destructing inside of Destructing for Nested Array (Nested Destructing)
-const nested = [2, 4, [5, 6]];   //Nested Array
-
-const [i, ,j] = nested;  //Usual Desturing will get the output array element and the nested array not the element inside the nested array
-console.log(i, j);
-
-const[iOuterArray, , [jNestedArrau, kNestedArray]] = nested; //Destructing inside a destructing will get element inside nested array
-console.log(iOuterArray, jNestedArrau ,kNestedArray);
-
-// >> 6. Default Values (When we are unsure the length of the array we are trying to destruct)
-// const [p, q, r] = [8, 9]; // There is no third element so r will return undefined
-
-const [p=1, q=1, r=1] = [8, 9]; //Assign default values to destructing varables.
-console.log(p, q, r);  //Elements inside the array will overwrite the default value if it is present and use the default value when the element is not present in the array  
-
-
-
-
+//  - Input Object with missing data, since the destructig input argument values are set with default value
+//  - The default values will be used for the missing properties ( See Restaurant -> orderDelivery method)
+restaurant.orderDelivery({
+  address: `Via Del SOle, 21`,
+  starterIndex: 1,
+});
