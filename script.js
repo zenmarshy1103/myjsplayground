@@ -1,83 +1,96 @@
-// Primitives vs Objects (More Examples)
-// - Object.assign(destination, from) - Merges two arrays together but shallow copy will not copy and assign new memory in the heap for objects (arrays) inside objects
-// - Primitive Values - Stored in the CALL STACK with identifier, memory address and value
-// -                  - Only primitive value set as constant is immutable
-// - Reference Values - Stored in the HEAP with memory address and value.
-//                    - referencing values are stored in the HEAP even when set as constant you still can change it ( >> NOTE: we are not changing the value at the address in the CALL STACK but in the ADDRESS of the HEAP)
-// - IMPORTANT: Objects - The varaiable of the object is stored in the CALL STACK With an idenfier of the object variable name , memory address and the value which points to the address of the HEAP (REFERENCING to the HEAP ADDRESS) 
-// -                    - Object attributes are values stored in the HEAP with an address then the object variable in the CALL STACK with an address points to the value which references the HEAP address that have he value of the object attributes
+// Arrays - Destructing  
+// - Unpacking values from an array into separate variables
+// - Retrieve elements from the array and store it into variables
+// - Destructing 1D Array
+// - Destructing array and retrieve the wanted element from the array
+// - Changing order of the variables from destructed array
+// - Destructing Nested Array
+// - Assigning default variables for destructing array - used when we are unsure of the size of the array.
 
 'use strict';
 
-// >> Primitive Value (Numbers, Strings, Boolean etc)
-//      - Stored in the CALL STACK with identifier, memory address and value
-//      - The identifier points to the address not the value 
-//      - The value at / set at a certain memory in the CALL STACK is immutable (CANNOT BE CHANGED)
-let age = 30;  // Identifier: age,  address: 0001(example), value: 30. ( >> NOTE: Age points to the memory address which hold the value of 30)
-let oldAge = age; //Assign age = 31 to old age, ( >> NOTE: old age identifer is pointing to the same address as age hence the value at the address is 30)
-age = 31;         // change age in let age = 30 to 31 ( >> NOTE: NEW piece of memory is created with a new address and stores the value 31)
-console.log(age);
-console.log(oldAge);
+// Data needed for a later exercise
+// const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-// >> Reference Value (Objects, Arrays etc)
-//      - Stored in the HEAP with memory arress and value.
-//      - The varaiable of the object is stored in the CALL STACK With an idenfier of the object variable name , memory address and the value which points to the address of the HEAP (REFERENCING to the HEAP ADDRESS)
-//      -
-const me = {                   // CALL STACK - Identifier: me, Address: 0003(Example), Value: D30F(example)  <-- HEAP memory address       
-    name: 'Jason',             // HEAP - Address: D30F(example), value: { name: 'jason', age: 30;}
-    age: 30,
+// Data needed for first part of the section
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  //Function to return more than 1 variable using return array type
+
+  order: function(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  }
+
+  // openingHours: {
+  //   thu: {
+  //     open: 12,
+  //     close: 22,
+  //   },
+  //   fri: {
+  //     open: 11,
+  //     close: 23,
+  //   },
+  //   sat: {
+  //     open: 0, // Open 24 hours
+  //     close: 24,
+  //   },
+  // },
 };
 
-// Source of confusion - friend and me are still referencing the me object
-//      - Only primitive value set as constant is immutable
-//      - Referecing value values are stored in the HEAP even when set as constant you still can change it ( >> NOTE: we are not changing the value at the address in the CALL STACK but in the ADDRESS of the HEAP)
-//      - Copying a object to a variable is the same as assigning a new idenfier / varaible that points to the same addrss of the copied object.
-const friend = me;               // CALL STACK - Identifier: friend ADDRESS: 0003(Example), Value: D30F
-friend.age = 27;                 // HEAP - Address: D30F(example), value: { name: 'jason', age: 27;} <-- We just change the value of the age to 27 in the HEAP which is still being referenced by the me and friend identifier in the CALL HEAP
-console.log(`friend:`, friend);  // RESULT: 
-console.log(`friend:`, me)       //     - <CALL STACK> Identifier: me, ADDRESS: 0003(Example), Value: D30F
-                                 //     -       <HEAP> ADDRESS: D30F, VALUE: {name: 'jason', age: 27}
-                                 //     - <CALL STACK> Identifier: friend, ADDRESS: 0003(Example), Value: D30F
-                                 //     -       <HEAP> ADDRESS: D30F, VALUE: {name: 'jason', age: 27}
-                                 
-// >> MORE EXAMPLES
-// Primitive Types
-let lastName = 'Jia';
-let oldLastname = lastName;
-lastName = 'Liu';
-console.log(lastName, oldLastname);
+const array1 = [2, 3, 4];
+const a = array1[0]
+const b = array1[1]
+const c = array1[2]
 
-// Reference Type
-const faye = {
-    firstName: 'Faye',
-    lastName: 'Jia',
-    age: 2023 - 1993,
-};
+// >> 1. Destructing elements into new varables
+//  - Orginal array is uneffected only using its elements and store it to variables.
+const [x, y ,z] = array1;   // << SYNTAX; Array Destructin Assignment
+console.log(x, y ,z);
 
-const marriedFaye = faye; // creating a new variable name that points to the same CALL STACK address of faye object.
-marriedFaye.lastName = 'Liu'   // Changes the properties stored in the HEAP which is being pointed to by the object variable name of both faye and marriedFaye
-console.log('Before Marriage:', faye);
-console.log('After Marriage:', marriedFaye);
+// >> Working with the data from the restaurante category array
 
-// Reference Type - Coping Objects (Object.assign())
-// - Merging two objects together
+// >> 2.  Destructing Array - Skipping element and retrieve the element you need to use
+const [first, , second] = restaurant.categories; // Skipping element in the array; skipping the 2nd element by leaving a hole ie [x, ,y] = array;
+console.log(first, second) //Note; 2nd element in the restaurant category array was skipped
 
-const faye2 = {
-    firstName: 'Faye',
-    lastName: 'Jia',
-    age: 2023 - 1993,
-    family: ['Cyrus', 'Claire', 'Clara']      
-};
+let [main, ,secondary] = restaurant.categories;
 
-const faye2Copy = Object.assign({}, faye2); // Merging an object to an empty object (Shallow copy not a deep clone meaning it will not copy an object stored in an object )
-faye2Copy.lastName = "Liu";
-// console.log('Before Marriage:', faye2);
-// console.log('After Marriage:', faye2Copy);
+// Switching Order - Normal Way
+// const temp = main;
+// main = secondary;
+// secondary = temp;
+// console.log(main, secondary)
 
-//The family array (object) is stored in the HEAP which is not copied using the Object.assign() - It is still being pointed to by the Heap Memory
-faye2Copy.family.push('Jason')   //Is pushing on an element onto the array which is being referenced by both faye2 and faye2Copy so both has the same array (Due to the fact that both are referencing to the array object which was not copied in the first place)
-console.log('Before Marriage:', faye2);     
-console.log('After Marriage:', faye2Copy);
+// >> 3. Switch Order - Destruct way
+[main, secondary] = [secondary, main];
+console.log(main, secondary);
+
+// >> 4. Destructing return values (Array type) from a function
+console.log(restaurant.order(2,0));
+const [starter, mainCourse] = restaurant.order(2,0);
+console.log(starter, mainCourse);
+
+// >> 5. Destructing inside of Destructing for Nested Array (Nested Destructing)
+const nested = [2, 4, [5, 6]];   //Nested Array
+
+const [i, ,j] = nested;  //Usual Desturing will get the output array element and the nested array not the element inside the nested array
+console.log(i, j);
+
+const[iOuterArray, , [jNestedArrau, kNestedArray]] = nested; //Destructing inside a destructing will get element inside nested array
+console.log(iOuterArray, jNestedArrau ,kNestedArray);
+
+// >> 6. Default Values (When we are unsure the length of the array we are trying to destruct)
+// const [p, q, r] = [8, 9]; // There is no third element so r will return undefined
+
+const [p=1, q=1, r=1] = [8, 9]; //Assign default values to destructing varables.
+console.log(p, q, r);  //Elements inside the array will overwrite the default value if it is present and use the default value when the element is not present in the array  
+
 
 
 
