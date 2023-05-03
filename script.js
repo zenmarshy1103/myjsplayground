@@ -1,8 +1,8 @@
-// Short Circuiting (&& and ||)
+// The Nullish Coalescing Operator (??) - Short Circuiting
 // - Use Any data type, return any data type, short-circuiting
-// - OR Short Circuiting: if the first value is a truthy value, it will immediately return that first value otherwise will return the right hand side value 
-// - AND Short Circuiting: if the first value is a falsy value, it will immediately return that first value otherwise will return the right hand side value
-'use strict';
+// - Same logic as OR Short Circuit: if the first value is a truthy value, it will immediately return that first value otherwise will return the right hand side value 
+// DIFFERENCE to OR: Turning 0 and ' ' (Empty string) as truthy value and leave null and undefined as falsy
+
 
 // Data needed for a later exercise
 // const flights =
@@ -60,44 +60,16 @@ const restaurant = {
   },
 };
 
-// >> Short Circuiting 
-// OR opertor
-// - Short Circuiting: if the first value is a  truthy value, it will immediately return that first value otherwise will return the right hand side value
-console.log(`----- OR -----`)
-console.log(3 || 'Jason'); // Short Circuiting: if the first value is a  truthy value, it will immediately return that first value 
-console.log( '' || 'Jason');
-console.log(true || 0);
-console.log(undefined || null);
-console.log (undefined || 0 || '' || 'hello' || 23 || null) // Short circuiting will find the next truthy value 
-
 // Using Tenary Operator to assign a default value if the propery does not exist in the restaurant object
 // restaurant.numGuests = 23;
-const guests1 = restaurant.numGuests? restaurant.numGuests: 10;
-console.log(guests1);
+restaurant.numGuests =  0;  //0 is a falsy value so OR shortcircuiting will see it as a falsy so the right hand side value will be used.
 
 // Using Short Circuiting Method to set default values 
 //  - Easier than using tenary operator and other logic to set default values
-const guests2 = restaurant.numGuests || 10;
-console.log(guests2)
+const guests = restaurant.numGuests || 10;       //0 is a falsy value so OR shortcircuiting will see it as a falsy so the right hand side value will be used.
+console.log(guests)
 
-//AND Operator
-// - Short Circuiting: if the first value is a falst value, it will immediately return that first value otherwise will return the right hand side value
-console.log(`----- AND -----`)
-console.log(0 && 'Jason')
-console.log(7 && 'Jason');
-console.log( 'hello'&& 23 & null && 'jason'); //returns falsy value of null
-
-// - AND Short Circuit is used so we can stop using If statment to check if something exists.
-if (restaurant.orderPizza) {
-  restaurant.orderPizza('mushrooms', 'spinach');
-}
-
-// Using AND Short Circuiting Method
-restaurant.orderPizza && restaurant.orderPizza('muchroom', 'spinach'); // The AND operator turns the second as the first is not falsy as the method exists
-
-
-
-
-
-
+// Solution -> use NULLISH Coalescing Operator
+const guestCorrect = restaurant.numGuests ?? 10;  // The Nullish works with nullish values not falsy or truthy values (turning 0 and ' ' as truthy, null and undefined are remained falsy values )
+console.log(guestCorrect);
 
