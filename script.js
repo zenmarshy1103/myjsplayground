@@ -1,13 +1,10 @@
-// The Spread Operator (...)
-// - This Operator works on all iterables (arrays, strings, maps, sets) excluding objects (PRE ES6)
-// - Expanding an array into all its elements  (Unpacking all element at once)
-// - Getting element out of an array (similar to destructing an array) BUT does not create separate variable to store each of the values
-// - NOTE: The spread operator is used when you need to write values separated by COMMAS!!!
-// - USE CASES:
-//  1. Copy shallow copies of arrays
-//  2. Merge two or more arrays together
-//  3. Using the values inside the array as input arguments of a method / function
-//  4. Copy shallow copies of objects (Post ES6 JS)
+// The Rest Pattern and Parameters
+// - Used for both Array and Object
+// -  Rest Pattern is used where we would write variable names separated by commas (left hand side of the assignment "=" operator )
+// -  Rest Pattern: Take the REST of the elements that is not being used in the destructing assignment in the array
+// -  Rest Pattern: Must be the last in the destructing assignment,
+// -  Rest Parameter: Any arbitory argument will still allow the function to be executed and using the arbitory arguments
+// -  Rest parameters are packed into an array of the parameter name 
 
 'use strict';
 
@@ -46,70 +43,82 @@ const restaurant = {
     console.log(`Here is your pizza with: ${ing1}, ${ing2} and ${ing3}`);
   },
 
-  // openingHours: {
-  //   thu: {
-  //     open: 12,
-  //     close: 22,
-  //   },
-  //   fri: {
-  //     open: 11,
-  //     close: 23,
-  //   },
-  //   sat: {
-  //     open: 0, // Open 24 hours
-  //     close: 24,
-  //   },
-  // },
+  orderPizza: function(mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
+
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0, // Open 24 hours
+      close: 24,
+    },
+  },
 };
 
-// >> Creating a new array based on the original array and adding new elements in the beginning.
-//  - traditional way: manual all ins or looping
-const arr = [7, 8, 9];
-const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
-console.log(badNewArr);
+// >> Rest Pattern (LHS of assignment operator "=")
+//    - Works on arrays and objects
+//    - Does the opposite to spread operator
+//    - Take the REST of the elements that is not being used in the destructing assignment in the array
+//    - The rest pattern must be the last in the destructing assignment (JS has no idea where to stop collecting the rest of the array if put else where)
+//    - Pack elements into an array
 
-// Spread Operator (...)
-//  - ... takes all the values out of the array then write it individually if it were to write 7, 8, 9 of the elements in the array
-//  - without ...  the array will be included inside the array.
-const newArr = [1, 2, ...arr];
-console.log(newArr);
-console.log(...newArr); // outputing the indivial values inside the array (same as writing >> console.log(1, 2, 7, 8, 9);)
+// >> <USE CASE> Destructing 
+// Arrays
+//  - order matters, rest patern MUST be at the end of a destructing assignment 
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others);  //others gets the rest of the undestructed array of [3, 4, 5]
 
-//Example
-//  - Creating a new menu
-const newMenu = [...restaurant.mainMenu, 'Gnocci']; //Creating a completely new array with the values inside the origianl restaurant.mainmenu array and adding in a new item
-console.log(newMenu);
+const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu]
+console.log(pizza, risotto, otherFood);
 
-// <USE CASES 1> Copy shallow copies of arrays
-const mainMenuCopy = [...restaurant.mainMenu]; //Shallow copy of the values of the array
-console.log(mainMenuCopy);
+// Objects
+//  - remaining elements will be collected into a new object
+//  - order does not matter compared to array as the value is the name of the property name of the object
+const {sat, ...weekdays} = restaurant.openingHours; //... weekdays will get the rest of the object fri and thu and stored in a new object called weekdays.
+console.log(weekdays);
 
-// <USE CASES 2> Merge two or more arrays together
-const menu = [...restaurant.mainMenu, ...restaurant.starterMenu];
-console.log(menu);
 
-// Iterables: Arrays, Strings, Maps, Sets
-// > Strings
-const str = 'Jason';
-const letters = [...str, ' ', 'L.'];
-console.log(letters);
-console.log(...letters);
-//console.log(`${...str}, Liu`) // IMPORTANT!!! WILL NOT WORK: The spread operator only works when passing in as an aruguemnt of a function or using it with values separate with COMMAS !!!
+// >> Rest Parameters
+//    - Any arbitory argument will still allow the function to be executed and using the arbitory arugments
+// rest parameters are packed into an array of the parameter name
 
-// <USE CASES 3> Using the values inside the array as input arguments of a method / function
-//Using the spread opertor as arguments inputs to a method / functoin
-// - method constructed in restaurant.orderPasta
-//const ingredients =[prompt("Let's make pasta! Ingredient 1?"),prompt("Let's make pasta! Ingredient 2?"), prompt("Let's make pasta! Ingredient 3?"), ]
-//console.log(ingredients);
-//restaurant.orderPasta(...ingredients); //The value of each of the elements inside the array will be used as input arguments for ing1 ,ing2 and ing3 of the method
+// >> <USE CASE> Passing into Functions 
 
-// Objects (New Version of JS works on Object)
-// Creating a new object based on the original object and adding properties to it.
-const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
-console.log(newRestaurant);
+//Functions 
+// rest parameters are put into an array of the parameter name
+const add = function(...numbers) {       
+  console.log(numbers);
+  let sum = 0;
+ 
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];        
+  };
+  console.log(sum);
+};
 
-//Shallow copying object
-const restaurantCopy = { ...restaurant };
-restaurantCopy.name = `Jason's pizza store`;
-console.log(restaurant.name);
-console.log(restaurantCopy.name);
+add(2, 3);
+add(5, 3, 7, 2);
+add(8, 2, 5, 3, 2, 1, 4);
+
+// - Putting an array as the arguments into a function with rest parameters
+const x = [23, 5, 7];
+add(...x) //Spreading the array x into individual values and  passed into the function as rest parameter where it turns it into an array.
+
+// Using the new method constructed in restaurant.orderPizza
+restaurant.orderPizza('mushroom', 'onion', 'olives', 'spinach');
+restaurant.orderPizza('mushroom'); //the the rest parameter did not get any input parameter, it will return an empty array
+
+
+
+
+
+
