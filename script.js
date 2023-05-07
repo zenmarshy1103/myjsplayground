@@ -1,8 +1,8 @@
-// Logical Assignment Operators - Short Circuiting
-// - More concised than the OR , AND and Nullish Coalescing Operator for short circuiting
-// - SYNTAX: OR: ||=, AND: &&=, Nullish: ??=
-// -
-
+// Looping Arrays: The for of loop
+// - Does not need a counter or condition, gives you the current element not the index of the current element
+// - Getting the index need to use the .entries() for the array and index and element can be destructed using the destructing method of [index, element]
+// - Loop over each of the menu array
+// - continue and break keyword still works
 
 // Data needed for a later exercise
 // const flights =
@@ -71,27 +71,20 @@ const rest2 = {
   owner: 'Giovanni Rossi',
 };
 
-//Set a default numGuest if the object does not have it.
-// rest1.numGuest = rest1.numGuest || 10; // output the rest.numGuest if it is truthy value if not output 10 (outputs: 20)
-// rest2.numGuest = rest2.numGuest || 10; // output the rest.numGuest if it is truthy value if not output 10 (outputs: 10)
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
-//Using Logical Assignment (More Concised)
-// - OR ASSIGNMENT OPERATOR
-// rest1.numGuest ||= 10;   
-// rest2.numGuest ||= 10;
+// >> FOR OF LOOP
+//    - Does not need a counter or condition, gives you the current element not the index of the current element
+//    - TOUBLESOME: Hard to get index of the item
+//    - Loop over each of the menu array
+//    - continue and break keyword still works
+for (const item of menu) {   
+  console.log(item);
+};
 
-// - Nullish Coalescing Assignment Operator ( Null or undefined true the output the RHS value)
-rest1.numGuest ??= 10;
-rest2.numGuest ??= 10;
+// To get the index of the item and the element of the item a the same time
+for (const [i, element] of menu.entries()) {   //Destructing index and element separately from menu.entries()
+  console.log(`${i + 1}: ${element}`);     
+}
 
-
-// rest1.owner = rest1.owner && '<ANONYMOUS>'
-// rest2.owner = rest2.owner && '<ANONYMOUS>'
-
-// - AND Assignment Operator (Assignment the RHS value if the current value is truthy)
-rest1.owner  &&= '<ANONYMOUS>';
-rest2.owner &&= '<ANONYMOUS>';
-
-console.log(rest1);
-console.log(rest2);
-
+// console.log([...menu.entries()]);
