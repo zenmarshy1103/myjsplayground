@@ -1,7 +1,7 @@
-// The Nullish Coalescing Operator (??) - Short Circuiting
-// - Use Any data type, return any data type, short-circuiting
-// - Same logic as OR Short Circuit: if the first value is a truthy value, it will immediately return that first value otherwise will return the right hand side value 
-// DIFFERENCE to OR: Turning 0 and ' ' (Empty string) as truthy value and leave null and undefined as falsy
+// Logical Assignment Operators - Short Circuiting
+// - More concised than the OR , AND and Nullish Coalescing Operator for short circuiting
+// - SYNTAX: OR: ||=, AND: &&=, Nullish: ??=
+// -
 
 
 // Data needed for a later exercise
@@ -60,16 +60,38 @@ const restaurant = {
   },
 };
 
-// Using Tenary Operator to assign a default value if the propery does not exist in the restaurant object
-// restaurant.numGuests = 23;
-restaurant.numGuests =  0;  //0 is a falsy value so OR shortcircuiting will see it as a falsy so the right hand side value will be used.
+const rest1 = {
+  name: 'Capri',
+  // numGuest: 20,
+  numGuest: 0,
+};
 
-// Using Short Circuiting Method to set default values 
-//  - Easier than using tenary operator and other logic to set default values
-const guests = restaurant.numGuests || 10;       //0 is a falsy value so OR shortcircuiting will see it as a falsy so the right hand side value will be used.
-console.log(guests)
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi',
+};
 
-// Solution -> use NULLISH Coalescing Operator
-const guestCorrect = restaurant.numGuests ?? 10;  // The Nullish works with nullish values not falsy or truthy values (turning 0 and ' ' as truthy, null and undefined are remained falsy values )
-console.log(guestCorrect);
+//Set a default numGuest if the object does not have it.
+// rest1.numGuest = rest1.numGuest || 10; // output the rest.numGuest if it is truthy value if not output 10 (outputs: 20)
+// rest2.numGuest = rest2.numGuest || 10; // output the rest.numGuest if it is truthy value if not output 10 (outputs: 10)
+
+//Using Logical Assignment (More Concised)
+// - OR ASSIGNMENT OPERATOR
+// rest1.numGuest ||= 10;   
+// rest2.numGuest ||= 10;
+
+// - Nullish Coalescing Assignment Operator ( Null or undefined true the output the RHS value)
+rest1.numGuest ??= 10;
+rest2.numGuest ??= 10;
+
+
+// rest1.owner = rest1.owner && '<ANONYMOUS>'
+// rest2.owner = rest2.owner && '<ANONYMOUS>'
+
+// - AND Assignment Operator (Assignment the RHS value if the current value is truthy)
+rest1.owner  &&= '<ANONYMOUS>';
+rest2.owner &&= '<ANONYMOUS>';
+
+console.log(rest1);
+console.log(rest2);
 
