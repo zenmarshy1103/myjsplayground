@@ -1,8 +1,7 @@
-// Optional Chaining (?.)
-// - For Arrays and Objects
-// - LHS?.RHS    (If LHS property exist in the object return the RHS property in LHS otherwise return undefined )
-// - Similar to Nullish Coalescing Operator that deals with Null and Undefined values, therefore the both of them are used together for some cases
-
+// Looping Objects (Object Key, Values and Entries)
+// - Looping Over Property Name (keys):  <SYNTAX> object.key(object.propertyname)
+// - Looping Over Property Values (Values): <SYNTAX> object.value(object.propertyname)
+// - Using Entries to Loop Over the whole Object: <SYNTAX> object.entries(object.propertyname)
 'use strict';
 
 // Data needed for a later exercise
@@ -61,50 +60,25 @@ const restaurant = {
   },
 };
 
-// Checking if an property exists in the object and a propery in a nested object exists
-//  - This gets very messy quickly if there are a lot of deeply nested objects
-if (restaurant.openingHours && restaurant.openingHours.mon) {
-  console.log(restaurant.openingHours.mon.open);
+// >> 1. Looping Over Property Name (keys)
+const properties = Object.keys(restaurant.openingHours);
+console.log(properties);
+
+let openStr = `We are open on ${properties.length} days: `
+for (const day of properties) {
+  openStr += `${day}, `;
 }
+console.log(openStr);
 
-// console.log(restaurant.openingHours.mon.open);
+// >> 2. Looping Over Property Values (Values)
+const values = Object.values(restaurant.openingHours);
+console.log(values);
 
-// >> Optional Chaining
-//  - If certain property does not exist, 'undefined' is immediately returned
-console.log(restaurant.openingHours.mon?.open); // if left hand side of ?. is true then the right hand side propery will be read if not then return undefined
+// >> 3 . Using Enties to Loop Over the whole Object (Property Name + Property Value)
+//    - Turns from object to array
+const entries = Object.entries(restaurant.openingHours);
+console.log(entries);
 
-// >> Multiple Optional Chaining
-console.log(restaurant.openingHours?.mon?.open);
-
-// Example
-// - Check if an property exists when the property name is called by the array elements
-// - Using both Optional Chaining and Short Circuiting Operator
-const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'wat', 'sun'];
-
-for (const day of days) {
-  //For Of Loop
-  // console.log(day);
-  const open = restaurant.openingHours[day]?.open ?? 'closed'; // Using with Nullish Coalescing Operator to set default value if the property is undefined
-  console.log(`on ${day}, we open at ${open}`);
-}
-
-// >> Calling Method - Check if a method exists before we call it
-console.log(restaurant.order?.(0, 1) ?? 'Method does not exist'); // If function exists, output it with (0, 1) passed in as argument otherwise return undefined
-console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
-
-// >> Using optional Chainging on arrays
-const users = [];
-
-// const users = [
-//   { name: 'Jason',
-//     email: 'hello@gmail.com'
-//   }
-// ];
-console.log(users[0]?.name ?? 'User array empty'); // Optional Chaining
-
-if (users.length > 0) {
-  //Without Optional Chaining
-  console.log(users[0].name);
-} else {
-  console.log('user array empty');
-}
+for (const [key, {open, close}] of entries) {    // Destructing array [Key , value], value is stored as object so destrucing it using object destructing 
+  console.log(`on ${key} we open at ${open} and close at ${close}`);
+};
