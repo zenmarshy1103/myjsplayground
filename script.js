@@ -1,7 +1,7 @@
-// Looping Objects (Object Key, Values and Entries)
-// - Looping Over Property Name (keys):  <SYNTAX> object.key(object.propertyname)
-// - Looping Over Property Values (Values): <SYNTAX> object.value(object.propertyname)
-// - Using Entries to Loop Over the whole Object: <SYNTAX> object.entries(object.propertyname)
+// Sets (ES6 - Data Structure)
+// - A collection of unique values, stored values cannot be duplicated, sets will only store the unique ones 
+// - This is used to store values only, once strored you cannot retrieve each of the values stored in the set
+// - Mainly Used to remove duplicated from an array and store the unique ones in the set
 'use strict';
 
 // Data needed for a later exercise
@@ -60,25 +60,51 @@ const restaurant = {
   },
 };
 
-// >> 1. Looping Over Property Name (keys)
-const properties = Object.keys(restaurant.openingHours);
-console.log(properties);
+// >> Creating a set / new set  <SYNTAX:> new Set()
+//  - iterables need to be passed in
+//  - Can hold mixed data types
+//  - Values stored cannont be duplicates of each other, sets will automatically store the unique ones
+const orderSet = new Set([
+  'Pasta', 
+  'Pizza', 
+  'Pizza', 
+  'Rosotto', 
+  'Pasta', 
+  'Pizza',
+]);
+console.log(orderSet); // OUTPUT looks like an array but different
 
-let openStr = `We are open on ${properties.length} days: `
-for (const day of properties) {
-  openStr += `${day}, `;
+const characterSet = new Set('Jason'); // String is always a iterable
+console.log(characterSet);
+characterSet.clear();  // BUILD IN Mehod <SYNTAX:> .clear() : Clear the whole set
+console.log(characterSet);
+
+console.log(orderSet.size); // BUILD IN Method: <SYNTAX> .size :(Output the size of the set)
+console.log(orderSet.has('Pizza')); // BUILD IN Method: <SYNTAX> .has() : Checks if the set has certain element
+console.log(orderSet.has('Bread'));
+
+// >> Add new element to a set <SYNTAX:> .add()
+orderSet.add('Garlic Bread');
+orderSet.add('Garlic Bread'); //If a duplicate element is being added, set will only store it once
+console.log(orderSet);
+
+// >> Delete an element  <SYNTAX:> .delete()
+orderSet.delete('Rosotto');
+console.log(orderSet);
+
+// >> Retriving data from Sets
+//  - We cannot retrieve data from sets, sets have no indexes referring to the elements
+//  - Use an array 
+
+// >> Looping over Sets
+for (const order of orderSet) {
+  console.log(order);
 }
-console.log(openStr);
 
-// >> 2. Looping Over Property Values (Values)
-const values = Object.values(restaurant.openingHours);
-console.log(values);
+// USE CASE 
+// - Remove duplicate values of array
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+const staffUnique = [...new Set(staff)];  //Unpacking elements, using spread operator, from staff set and store it into an array
+console.log(staffUnique);
+console.log(new Set(staff).size); //Checking the size of the set
 
-// >> 3 . Using Enties to Loop Over the whole Object (Property Name + Property Value)
-//    - Turns from object to array
-const entries = Object.entries(restaurant.openingHours);
-console.log(entries);
-
-for (const [key, {open, close}] of entries) {    // Destructing array [Key , value], value is stored as object so destrucing it using object destructing 
-  console.log(`on ${key} we open at ${open} and close at ${close}`);
-};
