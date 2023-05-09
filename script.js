@@ -1,7 +1,13 @@
-// Sets (ES6 - Data Structure)
-// - A collection of unique values, stored values cannot be duplicated, sets will only store the unique ones 
-// - This is used to store values only, once strored you cannot retrieve each of the values stored in the set
-// - Mainly Used to remove duplicated from an array and store the unique ones in the set
+// Maps (ES6 - Data Structure) - Fundamentals
+// - Data Structure that we can map values to keys, keys in maps can be any type (Object keys are always string type)
+// - BUILD IN Methods: Create Map  <SYNTAX:> new Map()
+// - Add Element(usual and chaining) <SYNTAX:> .set(key, value)  or <SYNTAX:> .set(key, value).set(key, value).set(key, value) etc
+// - Read Data from maps using KEY <SYNTAX:> .get(key)
+// - Check a map contains certain KEY <SYNTAX:> .has(key)
+// - Remove all element from the map <SYNTAX:> .clear()
+// - Using ARRAY and map KEYS (NOTE: An array has to be initialised or the data will just get undefined - CAUSE: Different reference in the HEAP)
+// - Using OBJECT and map KEYS (ie using the DOM object as key using document.querySelector('html_element'))
+
 'use strict';
 
 // Data needed for a later exercise
@@ -60,51 +66,68 @@ const restaurant = {
   },
 };
 
-// >> Creating a set / new set  <SYNTAX:> new Set()
-//  - iterables need to be passed in
-//  - Can hold mixed data types
-//  - Values stored cannont be duplicates of each other, sets will automatically store the unique ones
-const orderSet = new Set([
-  'Pasta', 
-  'Pizza', 
-  'Pizza', 
-  'Rosotto', 
-  'Pasta', 
-  'Pizza',
-]);
-console.log(orderSet); // OUTPUT looks like an array but different
+// >> Create a map  <SYNTAX:> new Map()
+const rest = new Map(); // Create an empty map (initially)
+const names = new Map();
 
-const characterSet = new Set('Jason'); // String is always a iterable
-console.log(characterSet);
-characterSet.clear();  // BUILD IN Mehod <SYNTAX:> .clear() : Clear the whole set
-console.log(characterSet);
+// >> Fill up the map (Add element to data stucture)  <SYNTAX:> .set()
+//  -  Sets contains Key and value pairs so Key and value need to be added at the same time
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Itality');
+console.log(rest.set(2, 'Lisbon, protugal')); // .set will update the most recent set with the new element
+console.log(rest);
 
-console.log(orderSet.size); // BUILD IN Method: <SYNTAX> .size :(Output the size of the set)
-console.log(orderSet.has('Pizza')); // BUILD IN Method: <SYNTAX> .has() : Checks if the set has certain element
-console.log(orderSet.has('Bread'));
+// >> Chaining Maps (Creating elements one after the next) <SYNTAX:> .set().set().set()  etc
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open')
+  .set(false, 'we area closed');
+console.log(rest);
 
-// >> Add new element to a set <SYNTAX:> .add()
-orderSet.add('Garlic Bread');
-orderSet.add('Garlic Bread'); //If a duplicate element is being added, set will only store it once
-console.log(orderSet);
+// >> Read Data from maps  <SYNTAX:> .get()
+//  - Pass in the name of the key
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
 
-// >> Delete an element  <SYNTAX:> .delete()
-orderSet.delete('Rosotto');
-console.log(orderSet);
+// Realtime usage
+const time = 21;
+// this example is clever but code may not be easily readable
+console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //Compare time against the time open and close in the map and return the value of true and false
 
-// >> Retriving data from Sets
-//  - We cannot retrieve data from sets, sets have no indexes referring to the elements
-//  - Use an array 
+// >> Check a map contains certain KEY <SYNTAX:> .has()
+console.log(rest.has('categories')); // Returns True if it has the key and false if it doesnt have it
 
-// >> Looping over Sets
-for (const order of orderSet) {
-  console.log(order);
-}
+// >> Deleting element in a map using the KEY <SYNTAX;> .delete()
+rest.delete(2);
+console.log(rest);
 
-// USE CASE 
-// - Remove duplicate values of array
-const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
-const staffUnique = [...new Set(staff)];  //Unpacking elements, using spread operator, from staff set and store it into an array
-console.log(staffUnique);
-console.log(new Set(staff).size); //Checking the size of the set
+// >> Check the size of the map <SYNTAX:> .size
+console.log(rest.size);
 
+// >> Remove all element from the map <SYNTAX:> .clear()
+names.set('1', 'Jason').set(2, 'Faye');
+console.log(names);
+names.clear();
+console.log(names);
+
+// >> Using ARRAY and OBJECT and map KEYS
+// ARRAY as KEY
+rest.set([1, 2], 'Test');
+console.log(rest);
+// Retriving data using the KEY of ARRAY
+console.log(rest.get([1, 2])); // This array has its own idenfier (in the Heap), not the same as the one we construct in the .set()
+
+//To make the above work
+// - An array new to be made
+const arr = [1, 2]; // This will allow JS to always use the same array identifer in the Heap
+
+// - Pass in the made array into the map
+rest.set(arr, 'test1');
+console.log(rest.get(arr));
+
+// OBJECT as KEY (Using DOM object as Key) NOTE: DOM object is object type
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
