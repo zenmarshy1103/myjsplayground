@@ -1,9 +1,8 @@
-// Working with Strings - Part 1  (Slicing Strings)
-// - Slicing Strings 
-// - Strings are primitives, cannot be mutated
-// - when using method on string, JS automatically convers string into an object (Boxing)
-// - returned string from methods are primitives
-
+// Working with Strings - Part 2  (Changing Case, replace content and comparison between strings)
+// - Changing the case of the string
+// - Take out spaces
+// - Replacing part of a string (Letters and Words)
+// - Booleans as return value for string methods (For conditionals)
 'use strict';
 
 // Data needed for a later exercise
@@ -65,61 +64,70 @@ const restaurant = {
 // - Strings are primitives so they cannot be mutated
 
 const airline = 'TAP Air Portugal';
-const plane = 'A320';
 
-console.log(plane[0]);  // Returns A
-console.log(plane[1]);  // Returns 3
-console.log(plane[3]);  // Returns 2
+// >> 1. Changing the case of the string
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
 
-console.log(`B737`[0]); // Returns B
+//     Fix capitalisation in name
+const passenger = 'jAsON';
+const passengerLower = passenger.toLowerCase();
+const PassengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1); //Conversting the first letter then adding the rest of the name using slice method on the remaining letters
+console.log(PassengerCorrect);
 
-console.log(airline.length);
-console.log('B737'.length);
+//  >> 2. Take out spaces
+//    Comparing email 
+const email = 'hello@jason.io';
+const loginEmail = ' Hello@Jason.Io \n';
+const lowerEmail = loginEmail.toLowerCase();
+const trimmedEmail = lowerEmail.trim(); // Take out the white spaces
+console.log(trimmedEmail);
 
-// >> Sting Methods
-//  <BOXING> 
-//  when using method on string, JS automatically convers string into an object (Boxing)
-//  <Behind the Scene>
-console.log(new String('TAP Air Portugal'));
-console.log(typeof(new String('TAP Air Portugal')));
-// Then the sting object will have build in methods (see console terminal and expand the object)
-// All returned string from method are primitive 
-console.log(typeof(new String('TAP Air Portugal').slice(0)));
+const normalisedEmail = loginEmail.toLowerCase().trim(); 
+console.log(normalisedEmail);
+//Comparing Emails
+console.log(email === normalisedEmail);
 
+// >> 3. Replaing part of a string
+//  - Replace only replaces the first occurance of the search
+// Replace character
+const priceGB = '288,97p'
+const priceUS = priceGB.replace('p', '$').replace(',', '.');   //Replace p with $ 
+console.log(priceUS);
 
-//  1. Gets the index of letters and words
-console.log(airline.indexOf('r'));
-console.log(airline.lastIndexOf('r'));  //Gets the last index of the word in airline string
-console.log(airline.indexOf('Portugal'));  // Search where the word starts at the index of the string
+// Replace word
+const announcement = 'All passengers come to boarding door 23, Boarding door 23!'
+console.log(announcement.replace('door', 'gate'))
+// console.log(announcement.replaceAll('door', 'gate'))  // New Method in ES6
 
-// 2. Slicing String
-//  - Begin parameter
-console.log(airline.slice(4)); //Slicing the string starting at the index, anything before it will be sliced off
-//  - End parameter
-//    length of sliced string = end parameter - begin parameter
-console.log(airline.slice(4, 7)); // returns Air , 4 is A and 7 is the blank space, so the slicing stops at 7 meaning 7 and anthing after it is sliced off
+// Regular expression to tell the replace method to target all occurance of the search , change ' ' to / / turns it to regular expression
+console.log(announcement.replace(/door/g, 'gate'))   //adding g flag, it stands for global
 
-// 3. Slicing without knowing the index of the string received
-//  - Extracting the first Word
-console.log(airline.slice(0, airline.indexOf(' ')));  // Start at index 0 and end at the index before the blank
+// >> 4. Booleans as return value for string methods (For condionals)
+// - startsWith()
+// - endsWigh()
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320'));  // returns true as it includes A320 in plane
+console.log(plane.includes('Boeing'));
 
-// - Extracting the Last Word
-console.log(airline.slice(airline.lastIndexOf(' ')));  // Slicing at the index that contains the last occuring blank
-console.log(airline.slice(airline.lastIndexOf(' ') + 1)); // Tanking out the blank 
+console.log(plane.startsWith('A320'));
+console.log(plane.startsWith('Ai')); // returns true as plane starts with Ai as in Airbus A320neo
 
-// - Counting from the end of the string (negative index)
-console.log(airline.slice(-2));   // last letter in the sting will be -1
-console.log(airline.slice(1, -1)); // Returns AP Air Portuga, slicing starts at index 1 and ends before the last letter of the string
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the new Airbus family')
+}
 
-const checkMiddleSeat = function(seat) {
-  // B and E are middle seats
-  const s = seat.slice(-1);
-  if (s === 'B' || s === 'E') {
-    console.log('you have the middle seat')
+//  Practice Exercise
+const checkBaggage = function(items) {
+  const baggage = items.toLowerCase();
+  
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT ALLOWED on board!!!');
   } else {
-    console.log('You do not have the middle seat yay')
+    console.log('Welcome aboard : )');
   }
 }
-checkMiddleSeat('11B');
-checkMiddleSeat('23C');
-checkMiddleSeat('3E');
+checkBaggage('I have a laptop, soMe food and a picket knife');
+checkBaggage('Socks and camers');
+checkBaggage('Got snacks and a gun for protection');
+
