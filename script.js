@@ -1,8 +1,10 @@
-// Working with Strings - Part 2  (Changing Case, replace content and comparison between strings)
-// - Changing the case of the string
-// - Take out spaces
-// - Replacing part of a string (Letters and Words)
-// - Booleans as return value for string methods (For conditionals)
+// Working with Strings - Part 3  (More Methods)
+// - Splitting string to multiple parts <SYNTAX> .split()
+// - Joining Strings  <SYNTAX> .join()
+// - Padding a string <SYNTAX> .padStart()  .padEnd()
+// - Repeat Method  <SYNTAX> .repeat()
+// - USE MDN to search for more string methods -> SEARCH: mdn String Replace in Google (in this search format)
+
 'use strict';
 
 // Data needed for a later exercise
@@ -60,74 +62,81 @@ const restaurant = {
     },
   },
 };
-// String is very similar to ARRAY
-// - Strings are primitives so they cannot be mutated
 
-const airline = 'TAP Air Portugal';
+// >> 1. Spliting string to muliple parts 
+// - split()
+// spliting the array that has the divider string, each of the content before the divider string is then stored in an array
 
-// >> 1. Changing the case of the string
-console.log(airline.toLowerCase());
-console.log(airline.toUpperCase());
+console.log('a+very+nice+string'.split('+')); // returns ['a', 'very', 'nice', 'string']
+console.log('Jason Liu'.split(' '));
 
-//     Fix capitalisation in name
-const passenger = 'jAsON';
-const passengerLower = passenger.toLowerCase();
-const PassengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1); //Conversting the first letter then adding the rest of the name using slice method on the remaining letters
-console.log(PassengerCorrect);
 
-//  >> 2. Take out spaces
-//    Comparing email 
-const email = 'hello@jason.io';
-const loginEmail = ' Hello@Jason.Io \n';
-const lowerEmail = loginEmail.toLowerCase();
-const trimmedEmail = lowerEmail.trim(); // Take out the white spaces
-console.log(trimmedEmail);
+// using Destructing on array 
+// - .split() is very easy to obtain data since it is turned into an array. Destructing it is very easy. 
+const [firstName, lastName] = 'Jason Liu'.split(' ');
 
-const normalisedEmail = loginEmail.toLowerCase().trim(); 
-console.log(normalisedEmail);
-//Comparing Emails
-console.log(email === normalisedEmail);
 
-// >> 3. Replaing part of a string
-//  - Replace only replaces the first occurance of the search
-// Replace character
-const priceGB = '288,97p'
-const priceUS = priceGB.replace('p', '$').replace(',', '.');   //Replace p with $ 
-console.log(priceUS);
+// >> 2. Joining Strings
+const newName = ['Mr.', firstName,  lastName.toUpperCase()].join('-') // join each of the sting stored in the array  with joining the string
+console.log(newName);  // returns Mr.-Jason-LIU
 
-// Replace word
-const announcement = 'All passengers come to boarding door 23, Boarding door 23!'
-console.log(announcement.replace('door', 'gate'))
-// console.log(announcement.replaceAll('door', 'gate'))  // New Method in ES6
 
-// Regular expression to tell the replace method to target all occurance of the search , change ' ' to / / turns it to regular expression
-console.log(announcement.replace(/door/g, 'gate'))   //adding g flag, it stands for global
-
-// >> 4. Booleans as return value for string methods (For condionals)
-// - startsWith()
-// - endsWigh()
-const plane = 'Airbus A320neo';
-console.log(plane.includes('A320'));  // returns true as it includes A320 in plane
-console.log(plane.includes('Boeing'));
-
-console.log(plane.startsWith('A320'));
-console.log(plane.startsWith('Ai')); // returns true as plane starts with Ai as in Airbus A320neo
-
-if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
-  console.log('Part of the new Airbus family')
-}
-
-//  Practice Exercise
-const checkBaggage = function(items) {
-  const baggage = items.toLowerCase();
+const capitaliseName = function(name) {
+  const names = name.split(' ');  // Split each word into array
+  console.log(names);
+  const namesUpper = [];  //initialising empty array 
   
-  if (baggage.includes('knife') || baggage.includes('gun')) {
-    console.log('You are NOT ALLOWED on board!!!');
-  } else {
-    console.log('Welcome aboard : )');
-  }
-}
-checkBaggage('I have a laptop, soMe food and a picket knife');
-checkBaggage('Socks and camers');
-checkBaggage('Got snacks and a gun for protection');
+  // - <METHOD 1> using slice to capitalise
+  // for (const n of names) {
+  //   namesUpper.push(n[0].toUpperCase() + n.slice(1));   //Pushing each capitalised word onto the array
+  // } 
+  // console.log(namesUpper.join(' '))    // Join each of the content of the array with space as joining string
 
+  // - <METHOD 2> using replace to capitalise
+  for (const n of names) {
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(namesUpper.join(' ')) 
+}
+capitaliseName('jessica ann smith davis');
+capitaliseName('jason liu');
+
+
+// >> 3. Padding a string -- < left of, continue from here
+// - Add a number of character until a certain length
+const message = `Go to gate 23!`;
+
+// Adding at the START of the string
+console.log(message.padStart(25, '+')); // add the '+' character until the length of the string equals to 25 at the beginning of the string
+console.log('Jason'.padStart(23, '+'));
+
+// Adding at the END of the string
+console.log(message.padStart(25, '+').padEnd(35, '+')); // add the '+' character until the length of the string equals to 35 at the end of the string
+console.log('Jason'.padStart(23, '+').padEnd(30, '+'));
+
+
+// Real World Application - Banking (Masking Credit card +++++++XXXX);
+const maskCreditCard = function(number) {
+  const str = number + '';  // turning number into a string, because of coercion a number adding to a string will become a string
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*');
+}
+
+console.log(maskCreditCard(73857999));
+console.log(maskCreditCard(43376537281088));
+console.log(maskCreditCard('735039750893805803980'));
+
+// >> 4. Repeat Method
+//    - Allows us to repeat the same string multiple times
+const message2 = `Bad Weather... All Departures Delayed... `;
+console.log(message2.repeat(5));  //Repeats the message 5 times
+
+const planesInLine = function(numberOfPlanes) {
+  console.log(`There are ${numberOfPlanes} planes in line ${`✈`.repeat(numberOfPlanes)}`);
+}
+planesInLine(5);
+planesInLine(3);
+planesInLine(12);
+
+// USE MDN to search for more string methods
+// -> SEARCH: mdn String Replace in Google
