@@ -1,38 +1,36 @@
-// String Method Practice 
-// - Splitting long input strings and store in array
-// - Use for of loop to perform tasks on each element of the array
-// - Destructure each of the element to variable names to be used later
-// - Formatting output string using string methods ie .startsWith(), .replace(), .replaceAll(), .slice(start, end), .toUppercase(), .padStart()
+// Functions - Default Parameters
+// - Having a default parameter 
+// - <ES6> Giving value in the function (param1, param2 = 1, param3 = 4 * 3, param4 = param2 * 100 ) etc
+// - Default value can be any type and can be arithmetic
+// - Can not skip parameter, to skip use undefined as parameter input
 
-// >> Decode this 
-//  - It could be a data fetched by API
-const flights =
-'_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-
-// <STEPS>
-//  - 1) Split the string by + to get the relative information for each departure and arrival (store in an array)
-//  - 2) Destructure each of the array element to variables (use a for of loop to apply for each of the element)
-//  - 3) Apply string methods to each 
+'use strict';
 
 
-// console.log(flights.split('+')); //Split each string from the + sigh and store each of them in a string
+//<ES6 WAY> Setting Default Value
+// - Giving value in the function (param1, param2 = 1, param3 = 4 * 3, param4 = param2 * 100 ) etc
+// - Default value can be any type and can be arithmetic
+// - Can not skip parameter, to skip use undefined as parameter input
+const bookings = []
 
-//Arrow function to return the string sliced from start to the letter before 3rd letter
-const getCode = str => {
-  return str.slice(0, 3).toUpperCase();  
+const createBooking = function (flightNum, numPassengers = 1, price = 200 * numPassengers) {    
+
+    //<ES5 WAY> Setting default values (Using Short Circuiting) 
+    // numPassengers = numPassengers || 1;  //<NOTE> OR SHORTCIRCUITING -> if the LHS is falsy, RHS will be returned.
+    // price = price || 199;
+
+    const booking = {   //creating an object with properties without assigning values
+        flightNum,
+        numPassengers,
+        price,
+        
+    }
+    console.log(booking);
+    bookings.push(booking);
 }
 
-
-for(const flight of flights.split('+')) { // Showing each of the string after splitting them by the + sign and storing to an array
-  console.log(flight);
-  const[status, from, to, time] = flight.split(';'); //destructure each element to be the varaibles of status, from, to, time
-  // console.log(status);
-  const output = `${status.startsWith('_Delayed')? '🔴': ''}${status.replaceAll('_', ' ')} from ${getCode(from)} to ${getCode(to)} (${time.replace(':', 'h')})`.padStart(50);
-  console.log(output);
-}
-
-
-
-
-
-
+createBooking('LH123');  //The input will append to their designated property in the booking object
+createBooking('LH123', 2, 800);
+createBooking('LH123', 2); 
+createBooking('LH123', undefined, 1000); // Skiping parameter by using undefined
+ 
