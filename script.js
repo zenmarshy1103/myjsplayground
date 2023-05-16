@@ -1,36 +1,49 @@
-// Functions - Default Parameters
-// - Having a default parameter 
-// - <ES6> Giving value in the function (param1, param2 = 1, param3 = 4 * 3, param4 = param2 * 100 ) etc
-// - Default value can be any type and can be arithmetic
-// - Can not skip parameter, to skip use undefined as parameter input
+// Functions - How Passing Argument works (Value vs Reference)
+// - PRIMITIVE TYPE value is copied so original is not affected
+// - OBJECT TYPE value will be referencing(pointing) to the same object in the memory heap 
+// - Passing in OBJECT into a FUNCTOIN can be troublesome in some cases 
+// - JavaScript Only has pass in by Value (Does not have pass in by reference capability)
+//          -> Even though passing in OBJECT seems like passing in by reference but
+//          -> what is being passed in is the value that contains a memeory address
 
 'use strict';
 
+const flightNumber = 'LH234';
+const jason = {
+    name: 'Jason Liu',
+    passport: 123456789,
+};
 
-//<ES6 WAY> Setting Default Value
-// - Giving value in the function (param1, param2 = 1, param3 = 4 * 3, param4 = param2 * 100 ) etc
-// - Default value can be any type and can be arithmetic
-// - Can not skip parameter, to skip use undefined as parameter input
-const bookings = []
-
-const createBooking = function (flightNum, numPassengers = 1, price = 200 * numPassengers) {    
-
-    //<ES5 WAY> Setting default values (Using Short Circuiting) 
-    // numPassengers = numPassengers || 1;  //<NOTE> OR SHORTCIRCUITING -> if the LHS is falsy, RHS will be returned.
-    // price = price || 199;
-
-    const booking = {   //creating an object with properties without assigning values
-        flightNum,
-        numPassengers,
-        price,
-        
+const checkIn = function(flightNum, passenger) {   
+    flightNum = 'LH999';
+    passenger.name = `Mr.` + passenger.name    //OBJECT - is Reference Type, this will change the jason object as they are the same object in the MEMOTY HEAP
+    
+    if (passenger.passport === 123456789) {
+        alert('Checked In');
+    } else {
+        alert('Wront Passport');
     }
-    console.log(booking);
-    bookings.push(booking);
+};
+
+checkIn(flightNumber, jason); //flightNum = flightNumber,  so PRIMITIVE value is copied 
+console.log(flightNumber);   // The original flightNumber is not changed what is chaged is the flightNum variable
+console.log(jason);    
+
+// The Above is the same as doing:
+const flightNum = flightNumber;
+console.log(flightNum);
+const passenger = jason;  //Passenger and jason are pointing to the same object in the memory heap
+console.log(passenger);
+
+// <NOTE> Passing in OBJECT into a FUNCTOIN can be troublesome in some cases 
+// - the original object attribute will be changed if the function manipulates the attributes and does some arithmetics
+// EXAMPLE
+
+const newPassport = function(person) {
+    person.passport = Math.trunc(Math.random() * 100000000);  
 }
 
-createBooking('LH123');  //The input will append to their designated property in the booking object
-createBooking('LH123', 2, 800);
-createBooking('LH123', 2); 
-createBooking('LH123', undefined, 1000); // Skiping parameter by using undefined
- 
+newPassport(jason);   //person param is pointing the the jason object so they are the same object
+checkIn(flightNumber, jason);
+console.log(jason.passport);   //the passport attribute changes as the newPassport function is called
+
