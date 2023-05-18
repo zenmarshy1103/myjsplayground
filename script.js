@@ -1,42 +1,48 @@
-// Functions - Accepting Callback Functions
-// - Use a function to call back another function
-// - HIGH ORDER FUNCTION (HIGH LEVEL Abstraction ) - using function as one of its parameter, and the callback function is lower level abstration
-// - Abstraction  Concept: Higher Order Function only cared about its own function rather than the function of the callback function
+// Functions - Function returning Functions
+// - Useful when using Functional Programming Paradigm
+// - <Interpretation> 
+// -    1. Outer function is called first which returns a function
+// -    2. The outer function that returns a function then is invoked passing in argument for inner function
 
 'use strict';
 
-const oneWord = function (str) {
-  return str.replace(/ /g, '').toLowerCase(); //replace spaces / /g   <- (g: global) with empty string
+
+// >> Closures 
+//    - Need to come back to this (Most misunderstood topic in JavaScript)
+const greet = function(greeting) {
+  return function(name) {
+    console.log(`${greeting} ${name}`);
+  };
 };
 
-const upperFirstWord = function (str) {
-  const [first, ...others] = str.split(' '); // ... Spread Operator:  unpack the elements in the array that was made when .split() was called
-  return [first.toUpperCase(), ...others].join(' '); // joins the first and ...others by space
-};
+// >> Calling functions returning functions
+// 1. Method One - Unboxing each function
+// Theory: Think of the most outer function is the outer box containing an inner box
+//       1. Opening outer box (outer function), which contains the inner box
+//       2. Then open the inner box, which has the functionality of the function.
+const greeterHey = greet('Hey'); // The greet function returns an function and the value of greet is stored in greeterHey variable (This Variable now is a function returning another function)
+greeterHey('Jason');  //using the greeterHey functino with parameter Jason.
+greeterHey('faye')
 
-// >> 1. Higher Order Function
-//      - Takes in a function (the function value is passed in not function)
-//      - Function in general have property and build in method
-//      - Abstraction  Concept: Higher Order Function only cared about its own function rather than the function of the callback function
-const transformer = function (str, fn) {
-  console.log(`Original String: ${str}`);
-  console.log(`Transformed String: ${fn(str)}`); // fn(str)  - giving the input parater of str to the call back function input
-  console.log(`Transformed By: ${fn.name}`); //rading the name property of the function
-};
+// 2. Method Two
+greet('Hello')('Jason');   //The correct interpretation is that the result of the expression greet('Hello') is a function, and then this function is immediately invoked with the argument 'Jason'.
 
-// >> 2.  Call Back functions
-//      - Use a function to call back another function
-//      - JS uses callbacks all the time
-transformer('JavaScript is the best!', upperFirstWord);
-transformer('JavaScript is the best!', oneWord);
+//<Explanation> 
+//To break it down step by step:
 
-// function high5() {
-//     console.log(`🖐`);
-// }
+// 1. greet('Hello') is called first, which returns a function.
+// 2. This returned function is then immediately invoked by using parentheses ( ), and the argument 'Jason' is passed to it.
+//   So, ('Jason') is not a separate function call, but rather the argument passed to the function returned by greet('Hello').
 
-const high5 = function () {
-  console.log(`🖐`);
-};
-document.body.addEventListener('click', high5); // the function will be called back when the click event listener has been triggered
+// Task: Turn greet function into arrow function
+const greetArrow = greeting => {
+  return name => {
+    console.log(`${greeting} ${name}`);
+      };
+}; 
 
-['Jason', 'Faye', 'Cyrus'].forEach(high5); // for each of the element call the call back function on each of them
+// Shorter Way
+const greetArr = greeting => name => console.log(`${greeting} ${name}`);
+
+greetArrow('Whats Up')('Jason');
+greetArr('Howdy')('Faye');
