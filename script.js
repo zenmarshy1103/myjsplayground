@@ -1,116 +1,46 @@
-// Functions - The Call and Apply Method to this Keyword
-// - Setting this this keyword manually (using .call(), .apply() and .bind())
-//    - Call Method <SYNTAX:> function.call(this-keyword-pointing-to, param1, param2, etc)  <- MODERN JS
-//    - Apply Mehtod <SYNTAX:> function.apply(this-keyword-pointing-to, array of param)  <- Hardly Used Nowadays
-//    - Bind Method <SYNTAX:> function.bind(this-keyword-point to) and creates a new function, used for partial application purposes also
+// Functions - Immediately Invoked Function Expressions (IIFE)
+// - Function that is only executed once and never again, it disappears right after it is executed
+// - Mainly used for Async and Await
+// - THEORY: Function creates Function Scope, one scope cannot access to variables from the inner scope 
+// -         All data defined in a scope is PRIVATE
+// - IIFE are not widely used nowadays for data privacy, most people create a block for variable declared const and let
+// - IIFE is used only when you want to execute the function once and make it disappear
+
 'use strict';
 
-const lufthansa = {
-  airline: 'Lufthansa',
-  iataCode: 'LH',
-  bookings: [],
-  // book: function (){} // ES5 SYNTAX
-  book(flightNum, name) {
-    // ES6 SYNTAX
-    console.log(
-      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
-    );
-    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
-  },
-};
+const runOnce = function() {
+  console.log(`this will never run again`)
+}
+runOnce();
+runOnce();
+console.log(`-------------`);
 
-lufthansa.book(239, 'Jason Liu');
-lufthansa.book(635, 'John Smith');
-console.log(lufthansa);
+// Immediately Invoked Function Expression
+// >> 1. Use () to wrap around function declaration statement into expression (trick JS to think this is an expression)
+(function() {
+  console.log('This will never run again');
+  console.log(`----------`)
+  const inPrivate = 23;  // This variable is private and is only accessible by the function inself (Function Scope)
+})();
 
-const eurowings = {
-  airline: 'Eurowings',
-  iataCode: 'EW',
-  bookings: [],
-};
+//console.log(isPrivate);  // <- THIS WILL NOT WORK - Global Scope cannot have access to variables inside a scope (PRIVATE SCOPE)
 
-const swiss = {
-  airline: 'Swiss Air Lines',
-  iataCode: 'LX',
-  bookings: [],
-};
+// Works also for arrow functions.
+(() => { 
+  console.log('This will ALSO never run again');
+  console.log(`----------`);})();
 
-const book = lufthansa.book; // Storing a method from an object to an variable, turning a method to a normal function then use it in other object as an method
-// <Note> Regular function call, this keyword points to undefined
-// book(23, 'Faye Jia')  //<- does not work
+// Block
+// - Variable declared const and let inside a block create their own scope
+// - Variable declared var in a block, global scope can access it
+{
+  const isPrivate = 23;
+  var notPrivate = 46;  
+}
 
-// >> 1 .Setting this Keyword manually
-//      - Telling JaveScript what this should look like rather than getting undefined
-//      - Function is an object and object has methods, so function has build in methods.
+// console.log(isPrivate)
+console.log(notPrivate);
 
-//  - Call Method
-//    - SYNTAX: function.call(THISKEYWORD-Pointing-to-object, argument to function)
-book.call(eurowings, 23, 'Faye Jia');
-console.log(eurowings);
 
-book.call(lufthansa, 239, 'Cyrus Liu');
-console.log(lufthansa);
 
-//  - Apply Method (Not really used much nowadays)
-//    - will take an array of the argument
-const flightData = [583, 'Claire Liu'];
-book.apply(eurowings, flightData);
-console.log(eurowings);
 
-// >> Modern JS
-// - Use .call() method
-// - use ... spread operator on array to get each element variables
-book.call(swiss, ...flightData); // Using the spread method to use the elements in the array
-console.log(swiss);
-
-// - Bind Method
-// - Doex not call the function
-// - returns the new function where the 'this' keyword is bound
-// - It sets to what ever value we pass into .bind()
-const bookEW = book.bind(eurowings); // This does not call the book function but return a new function for book and the this keyword will be set to eurowings
-const bookLH = book.bind(lufthansa);
-const bookLX = book.bind(swiss);
-
-bookEW(23, 'Steven Williams');
-
-// >> Resetting parameters of new function (Partial Application - part of the parameter is applied)
-const bookEW23 = book.bind(eurowings, 23); // Presetting the first parameter of the bookEW23 function. now book(flightNum, name) , has 23 set to FlightNum, so the new function only require a name parameter
-bookEW23('Jason Liu');
-bookEW23('Claire Liu');
-
-//  >> Using Object with Event Listeners
-lufthansa.planes = 300;
-lufthansa.buyPlane = function () {
-  console.log(this);
-  this.planes++;
-  console.log(this.planes);
-};
-
-document
-  .querySelector('.buy')
-  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa)); // this keyword in an event listener function will always point to the element calling the event listener
-  // So we need to bind the this keyword to lufthansa.
-
-// >> Partial Application (Preset Parameters)
-const addTax = (rate, value) => value + value * rate; //Arrow function returning value + value * rate (without return keyword)
-console.log(addTax(0.10, 200));
-
-const addVAT = addTax.bind(null, 0.23);  //setting null because we are not goint to assign the this keyword in this application but the parameres only, setting rate = 0.23 for the new addVat function
-console.log(addVAT(100));
-console.log(addVAT(50000));
-console.log(`----------------`)
-
-// Practice Example 
-// - Turning the Partial Application above using function returning function method 
-const addTaxRate = function(rate) {    // Box 1 contains Box 2. BOX 2 has the end product the final outcome of the functoin
-  return function(value) {
-    return value + value * rate;
-  };
-};
-
-const addVAT2 = addTaxRate(0.23);
-console.log(addVAT(100));
-console.log(addVAT(50000));
-console.log(`----------------`)
-console.log(addTaxRate(0.23)(100));
-console.log(addTaxRate(0.23)(50000));
