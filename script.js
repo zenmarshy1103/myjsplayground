@@ -1,11 +1,6 @@
-// Arrays - Simple Array Methods
-// - Methods are functions attached to object / arrays (Arrays are objects)
-// -  Slice Method
-// -  Splice Method
-// -  Reverse Method
-// -  Concat Method
-// -  Join Method
-// -  Always use MDN to check up more methods
+// Arrays - The new At method
+// NEW ES6 METHOD
+// Alternative way of using arr[position]
 
 'use strict';
 
@@ -84,89 +79,28 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
+const arr = [23, 11, 64];
+// Traditional way of getting element at position 
+console.log(arr[0]);
 
-let arr = ['a', 'b', 'c', 'd', 'e'];
+// >> At Method (NEW ES6 Method)
+// - A way of getting element at position
+// - Can be used on strings as well as on arrays
 
-// >> Slice Method
-//  - returns a new array with the sliced parts
-//  - can be used to creat a shallow copy of an array
-//  - SYNTAX: 
-//    - 1) arr.slice(start-index)
-//    - 2) arr.slice(start-index, end-index)
+console.log(arr.at(0));
 
-console.log(arr.slice(2));
-// length of array = end-index - start-index (4-2 = 2)
-console.log(arr.slice(2, 4));  
-// -1 is always the last element of the array
-console.log(arr.slice(-1)); 
-// slicing start from index 1 and end before the second last element counting from the end element  
-console.log(arr.slice(1, -2)); 
-// shallow copy of the array
-console.log(arr.slice());  // this can be used for chaining methods
-// similar way using spread operator
-console.log([...arr]);
+// Getting the last element of the array (Traditional Way)
+console.log(arr[arr.length - 1]); 
 
+// Anothr way of using slice (which creates a new copy of the array)
+// Grabbing the element at position of the new copy of the array 
+console.log(arr.slice(-1)[0]);
 
-// >> Spice Method
-//  - mutates the original array
-//  - used to remove elements from an array
-//  - SYNTAX:
-//    - 1) arr.splice(index)
-//    - 2) arr.aplice(index1, index2)
+// Using At method to get the last element of the array
+console.log(arr.at(-1));
 
- //Takes out elements from index position
-//  console.log(arr.splice(2));
- // remove the last elemetn of the array
- arr.splice(-1);
- // Original array has the elements stripped out
-console.log(arr);  
-// Deleting specific elements in the array
-arr.splice(1, 2); // element at index 1 and 2 are deleted
-console.log(arr);
-
-// >> Reverse Method
-//  - Mutates the original array
-//  - Used to reverse the items in the array
-//  - SYNTAX:
-//    - arr.reverse()
-arr = ['a', 'b', 'c', 'd', 'e'];
-const arr2 = ['j', 'i', 'h', 'g', 'j', 'f'];
-// reversing array elements
-console.log(arr2.reverse());
-// mutates the original array
-console.log(arr2);
-
-// >> Concat Method
-//  - Used to concat (link and chain) an array to another array
-//  - SYNTAX: 
-//     - arr1.concat(arr2) 
-
-// Concatenating aarr2 to arr array
-const letters = arr.concat(arr2)
-console.log(letters);
-
-// Another way of concatenating use Spread Operator
-console.log([...arr, ...arr2]);
-
-// >> Join Method
-//  - joining each element in the array with specifed variable
-//  - SYNTAX:
-//    - arr.join('variable')
-
-//Joining each element in letters array with '-' varable
-console.log(letters.join('-'));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Using At method on string
+const name = 'Jason';
+// getting the letter at the 2nd position of the string
+console.log(name.at(2));
 
