@@ -1,6 +1,9 @@
-// Arrays - The new At method
-// NEW ES6 METHOD
-// Alternative way of using arr[position]
+// Arrays - Looping Arrays: forEach() method
+//  - You cannot break out of the loop for forEach() method
+//  - When you need to break out of the loop -> Use: For of loop
+//  - <SYNTAX> arr.forEach(function(arr.element))
+//  - To get the current: element index array
+//    - <SYNTAX> arr.forEach(function(current-element, current-index, array-that we are looping))  <- must be in this order
 
 'use strict';
 
@@ -75,32 +78,55 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-const arr = [23, 11, 64];
-// Traditional way of getting element at position 
-console.log(arr[0]);
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-// >> At Method (NEW ES6 Method)
-// - A way of getting element at position
-// - Can be used on strings as well as on arrays
+// >> using For Of loop to loop each items in the array
+for (const movement of movements) {
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+}
 
-console.log(arr.at(0));
+// >> Access the counter in the for of loop
+console.log(`------For Of Loop (Accessing Counter) -------`);
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1} You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1} You withdrew ${Math.abs(movement)}`);
+  }
+}
 
-// Getting the last element of the array (Traditional Way)
-console.log(arr[arr.length - 1]); 
+// >> using For Each Method
+//    - forEach() if a higher order function so it needs a callback funtion
+//    - <THEORY>
+//      - 1) The forEach() loops over the array and execute the call back function in each iteration
+//      - 2) When the forEach method calls the callback function in each iteration, the forEach method will pass in the current element of the array as an argument
+//    - <SYNTAX> arr.forEach(function(arr.element))
+console.log(`------ forEach Method ------`);
+movements.forEach(function (movement) {
+  // Iteration 0: function(200) .. Iteration 1: function(450) ... so on
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+});
 
-// Anothr way of using slice (which creates a new copy of the array)
-// Grabbing the element at position of the new copy of the array 
-console.log(arr.slice(-1)[0]);
-
-// Using At method to get the last element of the array
-console.log(arr.at(-1));
-
-// Using At method on string
-const name = 'Jason';
-// getting the letter at the 2nd position of the string
-console.log(name.at(2));
-
+console.log(`------ForEach Method (Accessing Counter) -------`);
+// - <THEORY> forEach Method passes in current element, index and the entire array that we are looping
+// - <SYNTAX> arr.forEach(function(current-element, current-index, array-that we are looping))  <- must be in this order
+movements.forEach(function (movement, index, array) {
+  // We can specify in the call back function's argument
+  if (movement > 0) {
+    console.log(`Movement ${index + 1} You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${index + 1} You withdrew ${Math.abs(movement)}`);
+  }
+});
