@@ -1,10 +1,9 @@
-// Arrays - Looping Arrays: forEach() method
-//  - You cannot break out of the loop for forEach() method
-//  - When you need to break out of the loop -> Use: For of loop
-//  - <SYNTAX> arr.forEach(function(arr.element))
-//  - To get the current: element index array
-//    - <SYNTAX> arr.forEach(function(current-element, current-index, array-that we are looping))  <- must be in this order
-
+// Arrays - Looping Arrays: forEach() method with Maps and Sets
+//  - <SYNTAX>  
+//    - Map) map.forEach(function(value, key, map){})
+//    - Set) set.forEach(function(value, key, map){})  <---- there is no key in sets so
+//    - Set) set.forEach(function(value, _, map){})
+//  - The reason for the similar syntax because the developer making these method did not want to create separate method for map and set.
 'use strict';
 
 /////////////////////////////////////////////////
@@ -72,61 +71,35 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+/////////////////////////////////////////////////
+// >> forEach() method on Map
+console.log(`---------- forEach() on Map ----------`)
 const currencies = new Map([
-  ['USD', 'United States dollar'],
+  ['USD', 'United States dollar'],  // Key: 'USD' Value: 'United States dollar'
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
 ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+currencies.forEach(function(value, key, map){
+  console.log(`${key}: ${value}`);
+})
 
-/////////////////////////////////////////////////
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-// >> using For Of loop to loop each items in the array
-for (const movement of movements) {
-  if (movement > 0) {
-    console.log(`You deposited ${movement}`);
-  } else {
-    console.log(`You withdrew ${Math.abs(movement)}`);
-  }
-}
-
-// >> Access the counter in the for of loop
-console.log(`------For Of Loop (Accessing Counter) -------`);
-for (const [i, movement] of movements.entries()) {
-  if (movement > 0) {
-    console.log(`Movement ${i + 1} You deposited ${movement}`);
-  } else {
-    console.log(`Movement ${i + 1} You withdrew ${Math.abs(movement)}`);
-  }
-}
-
-// >> using For Each Method
-//    - forEach() if a higher order function so it needs a callback funtion
-//    - <THEORY>
-//      - 1) The forEach() loops over the array and execute the call back function in each iteration
-//      - 2) When the forEach method calls the callback function in each iteration, the forEach method will pass in the current element of the array as an argument
-//    - <SYNTAX> arr.forEach(function(arr.element))
-console.log(`------ forEach Method ------`);
-movements.forEach(function (movement) {
-  // Iteration 0: function(200) .. Iteration 1: function(450) ... so on
-  if (movement > 0) {
-    console.log(`You deposited ${movement}`);
-  } else {
-    console.log(`You withdrew ${Math.abs(movement)}`);
-  }
+// >> forEach() methods on Set
+// - <RECAP> Set only store the unique onces repeated ones gets deleted
+console.log(`---------- forEach() on Set ----------`)
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'TWD', 'EUR', 'TWD', 'EUR' ]);
+console.log(currenciesUnique);
+currenciesUnique.forEach(function(value, _, map){  // > JS:  _   throwaway varaible: Variables that are completely unnessessary 
+  console.log(`${key}: ${value}`);
+  
 });
 
-console.log(`------ForEach Method (Accessing Counter) -------`);
-// - <THEORY> forEach Method passes in current element, index and the entire array that we are looping
-// - <SYNTAX> arr.forEach(function(current-element, current-index, array-that we are looping))  <- must be in this order
-movements.forEach(function (movement, index, array) {
-  // We can specify in the call back function's argument
-  if (movement > 0) {
-    console.log(`Movement ${index + 1} You deposited ${movement}`);
-  } else {
-    console.log(`Movement ${index + 1} You withdrew ${Math.abs(movement)}`);
-  }
-});
+
