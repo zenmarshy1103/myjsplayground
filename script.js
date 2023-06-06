@@ -66,6 +66,8 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 // Functions
+
+// >> Function: 
 const displayMovements = function (movementsArray) {
   // Clear previous data in the movement container
   containerMovements.innerHTML = '';
@@ -92,6 +94,11 @@ const displayMovements = function (movementsArray) {
   });
 };
 displayMovements(account1.movements);
+
+
+
+
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -126,7 +133,7 @@ const eurToUsd = 1.1;
 // Simply the callback function to arrow function
 //  - No parentheses is needed when there is only one argument for the arrow function
 //  - No need return statement and { } as we only have one line of code for return value
-const movementsUsd = movements.map(movementArray => movementArray * eurToUsd); // Returns an new array with each element * eurToUsd
+const movementsUsd = movements.map(movement => movement * eurToUsd); // Returns an new array with each element * eurToUsd
 
 console.log(movements);
 console.log(movementsUsd);
