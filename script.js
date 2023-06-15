@@ -1,5 +1,9 @@
-// Array - Filter Method
-// - To filter for element that satisfy certain conditions
+// Array - Reduce Method
+// - To boil down the array to one single value
+//  - Loops over the array and call the callback function in each iteration
+// <SYNTAX> .reduce(function(accumulator, currentValueAtCurrentIndex, currentIndex, entireArray), initialValueOfAccumulator)
+// Accumulator is a snowball or a sum
+// initialValueOfAccumulator is the value of the accumulator at the start of the iteration
 
 // Project Bank Simulator -  Computing Usernames
 //  - Adding a userName property in each of the object account element in the accounts array.
@@ -165,3 +169,25 @@ console.log(`Using For of Loop:`, depositsFor);
 // Create a array that stores all the withdraws using .filter() array method
 const withdrawals = movements.filter((movement) => movement < 0);
 console.log(withdrawals);
+
+
+// >> Array - Reduce Method
+//  - Loops over the array and call the callback function in each iteration
+// <SYNTAX> .reduce(function(accumulator, currentValueAtCurrentIndex, currentIndex, entireArray), initialValueOfAccumulator)
+// Accumulator is a snowball or a sum
+// initialValueOfAccumulator is the value of the accumulator at the start of the iteration
+const balance = movements.reduce(function(accumulator, currentValue, index, array) {
+  console.log(`iteration ${index}: ${accumulator}`);
+  return accumulator + currentValue;
+}, 0);
+
+console.log(balance);
+
+// Using for of loop to do perform the functionality of the reduce method
+// - Needs a variable to store total
+// - Cannot method chain
+let bankBalance = 0;
+for (const movement of movements) {
+  bankBalance += movement;
+}
+console.log("Using for of Loop:", bankBalance);
