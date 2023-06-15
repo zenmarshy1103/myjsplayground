@@ -1,4 +1,10 @@
-// ARRAY - DATA Transformation with Map, Filter and Reduce (map method)
+// Array - Filter Method
+// - To filter for element that satisfy certain conditions
+
+// Project Bank Simulator -  Computing Usernames
+//  - Adding a userName property in each of the object account element in the accounts array.
+
+// Array Methods
 // - Maps: Return a new array containing the results of applying an operation on all original array elements
 // - Filter: Return a new array containing the array elements that passed a specified test condition
 // - Reduce: Boils, reduces all array elements  down to one single value (ie adding all elements together and other methods)
@@ -67,7 +73,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // Functions
 
-// >> Function: 
+// >> Function: Showing movement for account
 const displayMovements = function (movementsArray) {
   // Clear previous data in the movement container
   containerMovements.innerHTML = '';
@@ -95,10 +101,32 @@ const displayMovements = function (movementsArray) {
 };
 displayMovements(account1.movements);
 
+// > Function: Computing usernames for account
 
+// Testing to see if the ouput is the first letter of each word
+// const user = 'Steven Thomas Williams';
+// const userName = user.toLowerCase().split(' ');
+// console.log(userName);
+// Taking the first letter of each array ,['steven',  thomas', 'willams']
+// const userName = user.toLowerCase().split(' ').map((word) => word[0]).join('');
+// console.log(userName);
 
-
-
+// Turning the testing code into a function
+// - Create one username for each of the account holders in the accounts array
+const createUsernames = function (accountsArray) {
+  //Use for each, modify the existing accountsArray's object element
+  //  - add a userName property to the object element for each account stored in the account array
+  accountsArray.forEach(account => {
+    //This function is used to add property to an object element so no return is needed (side effect)
+    account.userName = account.owner
+      .toLowerCase()
+      .split(' ')
+      .map(word => word[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
+console.log(accounts);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -110,55 +138,30 @@ displayMovements(account1.movements);
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-// >> MAP Method
-//  - Map Method is functional paradigm (Functional Programming)
-//  - Each time the MAP method is calls a callback function:
-//    1) It will pass in: current Array element, current index and the whole array
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-//Convert elements in movements array to USD
-
-const eurToUsd = 1.1;
-
-// const movementsUsd = movements.map(function(movementArray){
-//   return movementArray * eurToUsd;   // Returns an new array with each element * eurToUsd
-// })
-// console.log(movements);
-// console.log(movementsUsd);
-
-// Simply the callback function to arrow function
-//  - No parentheses is needed when there is only one argument for the arrow function
-//  - No need return statement and { } as we only have one line of code for return value
-const movementsUsd = movements.map(movement => movement * eurToUsd); // Returns an new array with each element * eurToUsd
-
-console.log(movements);
-console.log(movementsUsd);
-
-// Using for of loop to perform the same task
-const movementsUSDfor = [];
-for (const movement of movements) {
-  movementsUSDfor.push(movement * eurToUsd);
-}
-console.log(movementsUSDfor);
-
-// const movementDescriptions = movements.map((movement, i, arr) => {
-//   if (movement > 0) {
-//     return `Movement ${i + 1}: you deposited ${movement}`;
-//   } else {
-//     return `Movement ${i + 1}: you withdrew ${Math.abs(movement)}`;
-//   }
-// });
-// console.log(movementDescriptions);
-
-//  Better Way - Using Tenary Operator
-const movementDescriptions = movements.map((movement, i) => {  
-  
-  return `Movement ${i + 1}: you ${movement > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
-    movement
-  )}`;
+// >> Array - Filter Method
+// - Filter out all the element in the movement array that are less than 0 and store in the deposit array
+// - Can be used for method chaining
+const deposits = movements.filter(function(movement) {
+  return movement > 0;  //condition for the filter method
 });
-console.log(movementDescriptions);
+console.log(movements);
+console.log(deposits);
+
+//Using a for of loop to do the same operation as the array filter method
+// - But cannot chain methods on this
+const depositsFor = []
+
+for (const movement of movements) {
+  if (movement > 0) {
+    depositsFor.push(movement)
+  }
+}
+console.log(`Using For of Loop:`, depositsFor);
+
+// Create a array that stores all the withdraws using .filter() array method
+const withdrawals = movements.filter((movement) => movement < 0);
+console.log(withdrawals);
