@@ -1,11 +1,6 @@
-// Array - Reduce Method
-// - To boil down the array to one single value
-//  - Loops over the array and call the callback function in each iteration
-// <SYNTAX> .reduce(function(accumulator, currentValueAtCurrentIndex, currentIndex, entireArray), initialValueOfAccumulator)
-// Accumulator is a snowball or a sum
-// initialValueOfAccumulator is the value of the accumulator at the start of the iteration
+// Array - Reduce Method (Continue ...)
 
-// Project Bank Simulator -  Computing Usernames
+// Project Bank Simulator -  Computing Current Balance from Movements
 //  - Adding a userName property in each of the object account element in the accounts array.
 
 // Array Methods
@@ -105,6 +100,12 @@ const displayMovements = function (movementsArray) {
 };
 displayMovements(account1.movements);
 
+const calcDisplayBalance = function(movements) {
+  const balance = movements.reduce((acc, movement) => acc + movement, 0)
+  labelBalance.textContent = `${balance} EUR`;
+}
+calcDisplayBalance(account1.movements);
+
 // > Function: Computing usernames for account
 
 // Testing to see if the ouput is the first letter of each word
@@ -132,6 +133,9 @@ const createUsernames = function (accountsArray) {
 createUsernames(accounts);
 console.log(accounts);
 
+
+
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -145,31 +149,6 @@ console.log(accounts);
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
-
-// >> Array - Filter Method
-// - Filter out all the element in the movement array that are less than 0 and store in the deposit array
-// - Can be used for method chaining
-const deposits = movements.filter(function(movement) {
-  return movement > 0;  //condition for the filter method
-});
-console.log(movements);
-console.log(deposits);
-
-//Using a for of loop to do the same operation as the array filter method
-// - But cannot chain methods on this
-const depositsFor = []
-
-for (const movement of movements) {
-  if (movement > 0) {
-    depositsFor.push(movement)
-  }
-}
-console.log(`Using For of Loop:`, depositsFor);
-
-// Create a array that stores all the withdraws using .filter() array method
-const withdrawals = movements.filter((movement) => movement < 0);
-console.log(withdrawals);
-
 
 // >> Array - Reduce Method
 //  - Loops over the array and call the callback function in each iteration
@@ -191,3 +170,13 @@ for (const movement of movements) {
   bankBalance += movement;
 }
 console.log("Using for of Loop:", bankBalance);
+
+// Get the Maximum value of the array
+
+const maxNumber = movements.reduce((acc, mov) =>{
+  // Comparing accumulator and the current movement
+  if (acc > mov) return acc;   //1st Iteration: acc = movement[0] , mov = 200 : return mov = 200 as the new acc
+  else return mov;             //2nd Iteration: acc = 200, mov = 450: return mov= 450 as the new acc
+                               // And so on ...
+}, movements[0])
+console.log(maxNumber);
