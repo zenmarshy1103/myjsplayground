@@ -1,7 +1,8 @@
-// Array - Reduce Method (Continue ...)
+// Array - The magic of chaining methods
+// - Methods that return new array can be chained.
+// - Most importantly if the former array method returns a new array method chaining can be used even if the one after it does not return a new array.
 
-// Project Bank Simulator -  Computing Current Balance from Movements
-//  - Adding a userName property in each of the object account element in the accounts array.
+// Project Bank Simulator -  Showing total IN, OUT and INTEREST on the Movements of Account 1  to the total on the Page
 
 // Array Methods
 // - Maps: Return a new array containing the results of applying an operation on all original array elements
@@ -100,11 +101,33 @@ const displayMovements = function (movementsArray) {
 };
 displayMovements(account1.movements);
 
-const calcDisplayBalance = function(movements) {
-  const balance = movements.reduce((acc, movement) => acc + movement, 0)
+// Showing calculated of each elements in the movements array for account 1 and show it on the webpage
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, movement) => acc + movement, 0);
   labelBalance.textContent = `${balance} EUR`;
-}
+};
 calcDisplayBalance(account1.movements);
+
+// Showing the total number on ehe IN, OUT and Interest display on the web
+const calcDisplaySummary = function (movements) {
+  // Showing the total number of deposits as the income(IN) on the display on the webpageconst incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}EUR`;
+// Showing the total number of withdraws as the OUT on the display
+  const outwards = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(outwards)}EUR`;   //Converting the value to absolute value
+// Showing the total number of interest on the income and display as the INTEREST on the display
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}EUR`;
+};
+calcDisplaySummary(account1.movements);
 
 // > Function: Computing usernames for account
 
@@ -133,9 +156,6 @@ const createUsernames = function (accountsArray) {
 createUsernames(accounts);
 console.log(accounts);
 
-
-
-
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -150,33 +170,14 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-// >> Array - Reduce Method
-//  - Loops over the array and call the callback function in each iteration
-// <SYNTAX> .reduce(function(accumulator, currentValueAtCurrentIndex, currentIndex, entireArray), initialValueOfAccumulator)
-// Accumulator is a snowball or a sum
-// initialValueOfAccumulator is the value of the accumulator at the start of the iteration
-const balance = movements.reduce(function(accumulator, currentValue, index, array) {
-  console.log(`iteration ${index}: ${accumulator}`);
-  return accumulator + currentValue;
-}, 0);
-
-console.log(balance);
-
-// Using for of loop to do perform the functionality of the reduce method
-// - Needs a variable to store total
-// - Cannot method chain
-let bankBalance = 0;
-for (const movement of movements) {
-  bankBalance += movement;
-}
-console.log("Using for of Loop:", bankBalance);
-
-// Get the Maximum value of the array
-
-const maxNumber = movements.reduce((acc, mov) =>{
-  // Comparing accumulator and the current movement
-  if (acc > mov) return acc;   //1st Iteration: acc = movement[0] , mov = 200 : return mov = 200 as the new acc
-  else return mov;             //2nd Iteration: acc = 200, mov = 450: return mov= 450 as the new acc
-                               // And so on ...
-}, movements[0])
-console.log(maxNumber);
+const euroToUsd = 1.1;
+// Chaining Array Methods
+// - Methods that return new array can be chained. Most important if the former array method returns a new array method chaining can be used even if the one after it does not return a new array.
+//  1. Filter out all movements hat are less than 0 and create a new array storing the values
+//  2. using the array from 1 to convert each of the element to USD and store it in the new array
+//  3. using the array from 2 and add them up using reduce method
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)  // .filter() returns a new array
+  .map(mov => mov * euroToUsd) // .map() returns a new array
+  .reduce((acc, mov) => acc + mov, 0);  // .reduce() returns a value (Not a new array)
+console.log(totalDepositsUSD);
