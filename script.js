@@ -1,6 +1,7 @@
-// Array - The magic of chaining methods
-// - Methods that return new array can be chained.
-// - Most importantly if the former array method returns a new array method chaining can be used even if the one after it does not return a new array.
+// Array - The Find Method
+//  - Will not return a new array but the first element of the array that satisfies the condition
+//  - Loops over the array to find one element
+//  - Used to retrieve the first element in the array based on a condition
 
 // Project Bank Simulator -  Showing total IN, OUT and INTEREST on the Movements of Account 1  to the total on the Page
 
@@ -115,12 +116,12 @@ const calcDisplaySummary = function (movements) {
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}EUR`;
-// Showing the total number of withdraws as the OUT on the display
+  // Showing the total number of withdraws as the OUT on the display
   const outwards = movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(outwards)}EUR`;   //Converting the value to absolute value
-// Showing the total number of interest on the income and display as the INTEREST on the display
+  labelSumOut.textContent = `${Math.abs(outwards)}EUR`; //Converting the value to absolute value
+  // Showing the total number of interest on the income and display as the INTEREST on the display
   const interest = movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * 1.2) / 100)
@@ -170,14 +171,22 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-const euroToUsd = 1.1;
-// Chaining Array Methods
-// - Methods that return new array can be chained. Most important if the former array method returns a new array method chaining can be used even if the one after it does not return a new array.
-//  1. Filter out all movements hat are less than 0 and create a new array storing the values
-//  2. using the array from 1 to convert each of the element to USD and store it in the new array
-//  3. using the array from 2 and add them up using reduce method
-const totalDepositsUSD = movements
-  .filter(mov => mov > 0)  // .filter() returns a new array
-  .map(mov => mov * euroToUsd) // .map() returns a new array
-  .reduce((acc, mov) => acc + mov, 0);  // .reduce() returns a value (Not a new array)
-console.log(totalDepositsUSD);
+// >> Find Method
+//  - Will not return a new array but the first element of the array that satisfies the condition
+//  - Loops over the array to find one element
+//  - Used to retrieve the first element in the array based on a condition
+
+const firstWithdraw = movements.find(mov => mov < 0); //Retrieve the first element that has the condition of less than zero
+console.log(firstWithdraw);
+
+//Find the account in the accounts array (With object elements) that has the owner name of Jessica Davis
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+//Using For Of Loop to do the same functionality as .find()
+const findAccountName = 'Jessica Davis';
+for (const account of accounts) {
+  if (account.owner === findAccountName) {
+    console.log(`Using For Of Loop: `, account);
+  }
+}
